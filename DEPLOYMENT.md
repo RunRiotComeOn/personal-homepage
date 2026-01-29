@@ -66,7 +66,7 @@ git push -u origin main
 2. 进入仓库的 **Actions** 标签页查看部署进度
 3. 等待所有步骤完成（通常需要 1-3 分钟）
 4. 部署成功后，你可以在以下地址访问网站：
-   - **https://YOUR_USERNAME.github.io/REPO_NAME/**
+   - **https://RunRiotComeOn.github.io/personal-homepage/**
 
 ### 6. 查看部署状态
 

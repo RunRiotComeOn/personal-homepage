@@ -29,6 +29,19 @@ export function useVisitorTracking(): UseVisitorTrackingResult {
 
     async function trackAndFetchVisitors() {
       try {
+        // Check if Supabase is configured
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+        if (!supabaseUrl || !supabaseKey) {
+          console.warn('Supabase not configured. Visitor tracking disabled.');
+          if (isMounted) {
+            setError('Visitor tracking not configured');
+            setLoading(false);
+          }
+          return;
+        }
+
         // Track current visitor
         const location = await getVisitorLocation();
 

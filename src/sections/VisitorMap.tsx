@@ -180,9 +180,18 @@ export default function VisitorMap() {
             </div>
           ) : error ? (
             <div className="aspect-[16/9] lg:aspect-[21/9] flex items-center justify-center">
-              <div className="text-center text-[#ff6b6b]">
-                <p className="mb-2">Failed to load visitor data</p>
-                <p className="text-sm text-[#adb5bd]">{error}</p>
+              <div className="text-center">
+                <Globe size={48} className="text-[#6c757d] mx-auto mb-4" />
+                <p className="text-[#adb5bd] mb-2">
+                  {error === 'Visitor tracking not configured'
+                    ? 'Visitor tracking feature is not yet configured'
+                    : 'Failed to load visitor data'}
+                </p>
+                <p className="text-sm text-[#6c757d]">
+                  {error === 'Visitor tracking not configured'
+                    ? 'Set up Supabase to enable real-time visitor tracking'
+                    : error}
+                </p>
               </div>
             </div>
           ) : (

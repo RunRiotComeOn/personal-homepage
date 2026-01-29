@@ -18,7 +18,7 @@ const educationData = [
     location: 'Shanghai, China',
     degree: 'B.S. in Data Science and Big Data Technology',
     period: '2023 – Present',
-    details: ['School of Computer Science'],
+    details: ['School of Data Science'],
   },
 ];
 

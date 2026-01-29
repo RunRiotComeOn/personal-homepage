@@ -96,7 +96,7 @@ export default function About() {
             >
               <div className="oil-frame aspect-[4/5] max-w-md mx-auto lg:mx-0 lg:-ml-8">
                 <img
-                  src="/hero-portrait.jpg"
+                  src={`${import.meta.env.BASE_URL}hero-portrait.jpg`}
                   alt="About Yixu Huang"
                   className="w-full h-full object-cover"
                 />

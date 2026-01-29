@@ -128,7 +128,7 @@ export default function Hero() {
           >
             <div className="oil-frame relative w-72 sm:w-80 lg:w-96 aspect-[3/4]">
               <img
-                src="/hero-portrait.jpg"
+                src={`${import.meta.env.BASE_URL}hero-portrait.jpg`}
                 alt="Yixu Huang"
                 className="w-full h-full object-cover"
               />

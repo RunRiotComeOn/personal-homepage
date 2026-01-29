@@ -7,28 +7,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const lifeImages = [
   {
-    src: '/life-hiking.jpg',
+    src: `${import.meta.env.BASE_URL}life-hiking.jpg`,
     alt: 'Hiking in mountains',
     icon: Mountain,
     title: 'Hiking',
     description: 'Exploring nature trails',
   },
   {
-    src: '/life-photography.jpg',
+    src: `${import.meta.env.BASE_URL}life-photography.jpg`,
     alt: 'Photography',
     icon: Camera,
     title: 'Photography',
     description: 'Capturing moments',
   },
   {
-    src: '/life-travel.jpg',
+    src: `${import.meta.env.BASE_URL}life-travel.jpg`,
     alt: 'Traveling',
     icon: Plane,
     title: 'Travel',
     description: 'Discovering new places',
   },
   {
-    src: '/life-reading.jpg',
+    src: `${import.meta.env.BASE_URL}life-reading.jpg`,
     alt: 'Reading',
     icon: BookOpen,
     title: 'Reading',

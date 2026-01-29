@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CurtainReveal from './components/CurtainReveal';
 import Navbar from './sections/Navbar';
 import Hero from './sections/Hero';
 import About from './sections/About';
@@ -17,6 +18,8 @@ import './App.css';
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  const [, setCurtainComplete] = useState(false);
+
   useEffect(() => {
     // Initialize scroll-triggered animations
     const sections = document.querySelectorAll('.animate-section');
@@ -46,6 +49,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa]">
+      <CurtainReveal onComplete={() => setCurtainComplete(true)} />
       <Navbar />
       <main>
         <Hero />

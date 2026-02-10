@@ -16,6 +16,15 @@ const researchData = [
     tags: ['Vision-Language Models', 'Reinforcement Learning', 'Efficiency'],
   },
   {
+    title: 'RA@ACE: Self-Evolving LLM Coding Framework via Adversarial Unit Test Generation and Preference Optimization',
+    institution: 'Fudan University',
+    advisor: 'Prof. Zhongyu Wei',
+    location: 'Shanghai, China',
+    period: 'Jan 2026 – Mar 2026',
+    description: 'Identified feedback saturation in solver–verifier self-improvement for code generation, where verifier-generated tests lose discriminative power as solvers improve. Proposed ACE, a solver–adversary self-evolving framework that replaces output-based verification with execution-centric adversarial supervision, designing adversarial unit test generation without oracle outputs and constructing execution-derived preference signals to jointly optimize the solver via SFT and the adversary via KTO. Achieved consistent gains in pass@k accuracy, out-of-distribution generalization, and inference efficiency across multiple code generation benchmarks. In submission to ICLR 2026 RSI Workshop.',
+    tags: ['LLM', 'Code Generation', 'Preference Optimization', 'Self-Improvement'],
+  },
+  {
     title: 'RA@Super-Resolution Spatial Omics Benchmarking',
     institution: 'Fudan University',
     advisor: 'Prof. Zhiyuan Yuan',

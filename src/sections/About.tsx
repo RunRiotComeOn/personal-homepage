@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Gamepad2, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -163,17 +163,18 @@ export default function About() {
         </div>
 
         {/* Game Promo Card */}
-        <div className="mt-16">
+        <div className="mt-16 max-w-xl mx-auto">
           <div
-            className="game-card-item award-card h-24 cursor-pointer"
+            className="game-card-item award-card h-20 cursor-pointer"
             style={{ perspective: '1000px' }}
             onClick={() => window.open('https://runriotcomeon.github.io/One-Button-Boss/', '_blank')}
           >
             <div className="award-card-inner relative w-full h-full">
               {/* Front */}
-              <div className="award-card-front absolute inset-0 bg-white rounded-2xl px-8 shadow-sm border border-[#dee2e6] flex items-center justify-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#ff0066] to-[#ff00ff] flex items-center justify-center shadow-lg flex-shrink-0">
-                  <svg viewBox="0 0 64 64" width="28" height="28" style={{ imageRendering: 'pixelated' }}>
+              <div className="award-card-front absolute inset-0 bg-white rounded-2xl px-6 shadow-sm border border-[#dee2e6] flex items-center justify-center gap-3">
+                <span className="text-2xl flex-shrink-0">🎮</span>
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#ff0066] to-[#ff00ff] flex items-center justify-center shadow-md flex-shrink-0">
+                  <svg viewBox="0 0 64 64" width="22" height="22" style={{ imageRendering: 'pixelated' }}>
                     <rect width="64" height="64" fill="#330011" rx="4"/>
                     <rect x="8" y="8" width="8" height="8" fill="#ff0066"/>
                     <rect x="48" y="8" width="8" height="8" fill="#ff0066"/>
@@ -187,26 +188,62 @@ export default function About() {
                     <rect x="20" y="52" width="24" height="8" fill="#ff0066"/>
                   </svg>
                 </div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-[#343a40]">
-                    Come try my new game — <span className="text-[#ff0066]">One Button Boss</span>
+                <div className="min-w-0">
+                  <h3 className="font-serif text-base font-bold text-[#343a40]">
+                    Come play <span className="text-[#ff0066]">One Button Boss</span> !
                   </h3>
-                  <p className="text-sm text-[#6c757d]">A pixel-art bullet hell experience</p>
+                  <p className="text-xs text-[#6c757d]">A pixel-art bullet hell I built for fun</p>
                 </div>
-                <Gamepad2 size={24} className="text-[#6c757d] ml-auto flex-shrink-0" />
+                <span className="text-xl flex-shrink-0">👾</span>
               </div>
 
               {/* Back */}
-              <div className="award-card-back absolute inset-0 bg-gradient-to-br from-[#0a0a0f] to-[#1a1a2e] rounded-2xl px-8 flex items-center justify-center gap-4 border border-[#ff0066]/30">
-                <div className="w-12 h-12 rounded-xl bg-[#ff0066]/20 flex items-center justify-center flex-shrink-0">
-                  <ExternalLink size={24} className="text-[#ff0066]" />
-                </div>
-                <div>
-                  <p className="text-[#00ffc8] font-mono text-sm font-bold">
+              <div
+                className="award-card-back absolute inset-0 rounded-2xl px-6 flex items-center justify-center gap-3 overflow-hidden"
+                style={{
+                  background: '#0a0a0f',
+                  border: '1px solid rgba(0, 255, 200, 0.2)',
+                }}
+              >
+                {/* Pixel grid overlay */}
+                <div
+                  className="absolute inset-0 opacity-30 pointer-events-none"
+                  style={{
+                    backgroundImage: 'linear-gradient(rgba(0,255,200,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,200,0.15) 1px, transparent 1px)',
+                    backgroundSize: '6px 6px',
+                  }}
+                />
+                {/* Floating pixels */}
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-1.5 h-1.5 bg-[#00ffc8] pointer-events-none"
+                    style={{
+                      left: `${10 + i * 12}%`,
+                      top: `${20 + (i % 3) * 25}%`,
+                      opacity: 0.25,
+                      animation: `pixelFloat${i % 2} ${2 + i * 0.5}s ease-in-out infinite`,
+                      animationDelay: `${i * 0.3}s`,
+                    }}
+                  />
+                ))}
+                <ExternalLink size={18} className="text-[#00ffc8] flex-shrink-0 relative z-10" />
+                <div className="relative z-10">
+                  <p className="text-[#00ffc8] font-mono text-xs font-bold">
                     runriotcomeon.github.io/One-Button-Boss
                   </p>
-                  <p className="text-white/60 text-xs mt-1">Click to play — dodge bullets, dash through the boss!</p>
+                  <p className="text-white/50 text-xs mt-0.5">Click to play!</p>
                 </div>
+                <style>{`
+                  @keyframes pixelFloat0 {
+                    0%, 100% { transform: translateY(0); opacity: 0.2; }
+                    50% { transform: translateY(-8px); opacity: 0.5; }
+                  }
+                  @keyframes pixelFloat1 {
+                    0%, 100% { transform: translateY(0) translateX(0); opacity: 0.15; }
+                    50% { transform: translateY(-6px) translateX(4px); opacity: 0.4; }
+                  }
+                `}</style>
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Gamepad2, ExternalLink } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,6 +61,23 @@ export default function About() {
             start: 'top 60%',
           },
           delay: 0.4,
+        }
+      );
+
+      // Game card animation
+      gsap.fromTo(
+        '.game-card-item',
+        { rotateY: -90, opacity: 0 },
+        {
+          rotateY: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: '.game-card-item',
+            start: 'top 85%',
+          },
+          delay: 0.3,
         }
       );
 
@@ -140,6 +158,56 @@ export default function About() {
                 Through my research, I aim to advance the understanding of how AI systems can better 
                 perceive, reason, and interact with the world.
               </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Game Promo Card */}
+        <div className="mt-16">
+          <div
+            className="game-card-item award-card h-24 cursor-pointer"
+            style={{ perspective: '1000px' }}
+            onClick={() => window.open('https://runriotcomeon.github.io/One-Button-Boss/', '_blank')}
+          >
+            <div className="award-card-inner relative w-full h-full">
+              {/* Front */}
+              <div className="award-card-front absolute inset-0 bg-white rounded-2xl px-8 shadow-sm border border-[#dee2e6] flex items-center justify-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#ff0066] to-[#ff00ff] flex items-center justify-center shadow-lg flex-shrink-0">
+                  <svg viewBox="0 0 64 64" width="28" height="28" style={{ imageRendering: 'pixelated' }}>
+                    <rect width="64" height="64" fill="#330011" rx="4"/>
+                    <rect x="8" y="8" width="8" height="8" fill="#ff0066"/>
+                    <rect x="48" y="8" width="8" height="8" fill="#ff0066"/>
+                    <rect x="16" y="12" width="32" height="8" fill="#ff0066"/>
+                    <rect x="8" y="24" width="16" height="12" fill="#ff0066"/>
+                    <rect x="40" y="24" width="16" height="12" fill="#ff0066"/>
+                    <rect x="12" y="28" width="8" height="4" fill="#ffff00"/>
+                    <rect x="44" y="28" width="8" height="4" fill="#ffff00"/>
+                    <rect x="28" y="32" width="8" height="8" fill="#ff0066"/>
+                    <rect x="16" y="44" width="32" height="8" fill="#ff0066"/>
+                    <rect x="20" y="52" width="24" height="8" fill="#ff0066"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-serif text-lg font-bold text-[#343a40]">
+                    Come try my new game — <span className="text-[#ff0066]">One Button Boss</span>
+                  </h3>
+                  <p className="text-sm text-[#6c757d]">A pixel-art bullet hell experience</p>
+                </div>
+                <Gamepad2 size={24} className="text-[#6c757d] ml-auto flex-shrink-0" />
+              </div>
+
+              {/* Back */}
+              <div className="award-card-back absolute inset-0 bg-gradient-to-br from-[#0a0a0f] to-[#1a1a2e] rounded-2xl px-8 flex items-center justify-center gap-4 border border-[#ff0066]/30">
+                <div className="w-12 h-12 rounded-xl bg-[#ff0066]/20 flex items-center justify-center flex-shrink-0">
+                  <ExternalLink size={24} className="text-[#ff0066]" />
+                </div>
+                <div>
+                  <p className="text-[#00ffc8] font-mono text-sm font-bold">
+                    runriotcomeon.github.io/One-Button-Boss
+                  </p>
+                  <p className="text-white/60 text-xs mt-1">Click to play — dodge bullets, dash through the boss!</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

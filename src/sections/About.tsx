@@ -167,7 +167,7 @@ export default function About() {
           <div
             className="game-card-item award-card h-20 cursor-pointer"
             style={{ perspective: '1000px' }}
-            onClick={() => window.open('https://runriotcomeon.github.io/One-Button-Boss/', '_blank')}
+            onClick={() => window.open('https://yxsophie.itch.io/one-button-boss', '_blank')}
           >
             <div className="award-card-inner relative w-full h-full">
               {/* Front */}
@@ -230,7 +230,7 @@ export default function About() {
                 <ExternalLink size={18} className="text-[#00ffc8] flex-shrink-0 relative z-10" />
                 <div className="relative z-10">
                   <p className="text-[#00ffc8] font-mono text-xs font-bold">
-                    runriotcomeon.github.io/One-Button-Boss
+                    yxsophie.itch.io/one-button-boss
                   </p>
                   <p className="text-white/50 text-xs mt-0.5">Click to play!</p>
                 </div>

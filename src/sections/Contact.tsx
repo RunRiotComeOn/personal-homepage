@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, Github, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Github, Gamepad2, Twitter, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,6 +19,18 @@ const socialLinks = [
     href: 'https://github.com/RunRiotComeOn',
     icon: Github,
     color: 'hover:bg-gray-50 hover:text-gray-900 hover:border-gray-200',
+  },
+  {
+    name: 'Itch.io',
+    href: 'https://yxsophie.itch.io',
+    icon: Gamepad2,
+    color: 'hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200',
+  },
+  {
+    name: 'X',
+    href: 'https://x.com/YixuHuang342',
+    icon: Twitter,
+    color: 'hover:bg-sky-50 hover:text-sky-600 hover:border-sky-200',
   },
 ];
 

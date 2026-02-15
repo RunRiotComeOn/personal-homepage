@@ -175,10 +175,10 @@ export default function Hero() {
             </div>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <a
                 href="mailto:yixuhuang23@m.fudan.edu.cn"
-                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#343a40] text-white rounded-lg font-medium hover:bg-black transition-colors"
+                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 bg-white rounded-xl border border-[#dee2e6] shadow-sm font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
               >
                 <Mail size={20} />
                 Email
@@ -187,7 +187,7 @@ export default function Hero() {
                 href="https://github.com/RunRiotComeOn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#343a40] text-[#343a40] rounded-lg font-medium hover:bg-[#343a40] hover:text-white transition-colors"
+                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 bg-white rounded-xl border border-[#dee2e6] shadow-sm font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-200"
               >
                 <Github size={20} />
                 GitHub
@@ -196,7 +196,7 @@ export default function Hero() {
                 href="https://x.com/YixuHuang342"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#343a40] text-[#343a40] rounded-lg font-medium hover:bg-[#343a40] hover:text-white transition-colors"
+                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 bg-white rounded-xl border border-[#dee2e6] shadow-sm font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-sky-50 hover:text-sky-600 hover:border-sky-200"
               >
                 <Twitter size={20} />
                 X
@@ -205,7 +205,7 @@ export default function Hero() {
                 href="https://yxsophie.itch.io"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#343a40] text-[#343a40] rounded-lg font-medium hover:bg-[#343a40] hover:text-white transition-colors"
+                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 bg-white rounded-xl border border-[#dee2e6] shadow-sm font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200"
               >
                 <Gamepad2 size={20} />
                 Itch.io

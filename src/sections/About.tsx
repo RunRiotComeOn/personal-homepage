@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Mail, Github, Twitter, Gamepad2 } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -158,30 +158,6 @@ export default function About() {
                 Through my research, I aim to advance the understanding of how AI systems can better 
                 perceive, reason, and interact with the world.
               </p>
-            </div>
-
-            {/* Social links */}
-            <div className="about-para flex flex-wrap gap-3 mt-8">
-              {[
-                { name: 'Email', href: 'mailto:yixuhuang23@m.fudan.edu.cn', icon: Mail, color: 'hover:bg-red-50 hover:text-red-600 hover:border-red-200' },
-                { name: 'GitHub', href: 'https://github.com/RunRiotComeOn', icon: Github, color: 'hover:bg-gray-50 hover:text-gray-900 hover:border-gray-200' },
-                { name: 'X', href: 'https://x.com/YixuHuang342', icon: Twitter, color: 'hover:bg-sky-50 hover:text-sky-600 hover:border-sky-200' },
-                { name: 'Itch.io', href: 'https://yxsophie.itch.io', icon: Gamepad2, color: 'hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200' },
-              ].map((link, i) => {
-                const Icon = link.icon;
-                return (
-                  <a
-                    key={i}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-[#dee2e6] shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 ${link.color}`}
-                  >
-                    <Icon size={18} />
-                    <span className="font-medium text-sm">{link.name}</span>
-                  </a>
-                );
-              })}
             </div>
           </div>
         </div>

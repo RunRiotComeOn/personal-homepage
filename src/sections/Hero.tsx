@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { Mail, Github } from 'lucide-react';
+import { Mail, Github, Twitter, Gamepad2 } from 'lucide-react';
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -191,6 +191,24 @@ export default function Hero() {
               >
                 <Github size={20} />
                 GitHub
+              </a>
+              <a
+                href="https://x.com/YixuHuang342"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#343a40] text-[#343a40] rounded-lg font-medium hover:bg-[#343a40] hover:text-white transition-colors"
+              >
+                <Twitter size={20} />
+                X
+              </a>
+              <a
+                href="https://yxsophie.itch.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#343a40] text-[#343a40] rounded-lg font-medium hover:bg-[#343a40] hover:text-white transition-colors"
+              >
+                <Gamepad2 size={20} />
+                Itch.io
               </a>
             </div>
           </div>

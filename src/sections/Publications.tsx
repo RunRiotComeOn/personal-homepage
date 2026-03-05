@@ -7,13 +7,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 const publications = [
   {
-    title: 'Research in Progress',
-    authors: '',
-    venue: '',
-    type: 'Wish me good luck!',
-    abstract: ':)',
+    title: 'ACE: Self-Evolving LLM Coding Framework via Adversarial Unit Test Generation and Preference Optimization',
+    authors: 'Yixu Huang, Xinglei Yu, Zhongyu Wei',
+    venue: 'ICLR 2026 Workshop on Reasoning and Planning for LLMs (RSI)',
+    type: 'Spotlight',
+    abstract: 'We identify feedback saturation in solver–verifier self-improvement for code generation, where verifier-generated tests lose discriminative power as solvers improve. We propose ACE, a solver–adversary self-evolving framework that replaces output-based verification with execution-centric adversarial supervision, achieving consistent gains in pass@k accuracy, out-of-distribution generalization, and inference efficiency across multiple code generation benchmarks.',
     links: {
-      pdf: '#',
+      pdf: '',
       code: 'https://github.com/RunRiotComeOn',
     },
   },
@@ -120,13 +120,15 @@ export default function Publications() {
 
               {/* Links */}
               <div className="flex items-center gap-4 mt-4 pt-4 border-t border-[#dee2e6]">
-                <a
-                  href={pub.links.pdf}
-                  className="flex items-center gap-2 text-sm text-[#343a40] font-medium hover:text-black transition-colors"
-                >
-                  <ExternalLink size={16} />
-                  PDF
-                </a>
+                {pub.links.pdf && (
+                  <a
+                    href={pub.links.pdf}
+                    className="flex items-center gap-2 text-sm text-[#343a40] font-medium hover:text-black transition-colors"
+                  >
+                    <ExternalLink size={16} />
+                    PDF
+                  </a>
+                )}
                 <a
                   href={pub.links.code}
                   target="_blank"

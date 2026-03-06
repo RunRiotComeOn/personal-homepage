@@ -12,6 +12,7 @@ const publications = [
     venue: 'ICLR 2026 Workshop RSI',
     type: 'Spotlight',
     abstract: 'We identify feedback saturation in solver–verifier self-improvement for code generation, where verifier-generated tests lose discriminative power as solvers improve. We propose ACE, a solver–adversary self-evolving framework that replaces output-based verification with execution-centric adversarial supervision, achieving consistent gains in pass@k accuracy, out-of-distribution generalization, and inference efficiency across multiple code generation benchmarks.',
+    image: '/ace-pipeline.png',
     links: {
       pdf: 'https://openreview.net/forum?id=ecKAmz5vlO',
       code: 'https://github.com/RunRiotComeOn',
@@ -110,6 +111,17 @@ export default function Publications() {
                   {pub.type}
                 </span>
               </div>
+
+              {/* Main figure */}
+              {pub.image && (
+                <div className="my-4 rounded-lg overflow-hidden border border-[#dee2e6] bg-white">
+                  <img
+                    src={pub.image}
+                    alt={`${pub.title} overview`}
+                    className="w-full h-auto"
+                  />
+                </div>
+              )}
 
               {/* Abstract - expands on hover */}
               <div className="pub-abstract">

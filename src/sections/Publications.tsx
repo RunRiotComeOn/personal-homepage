@@ -12,7 +12,7 @@ const publications = [
     venue: 'ICLR 2026 Workshop RSI',
     type: 'Spotlight',
     abstract: 'We identify feedback saturation in solver–verifier self-improvement for code generation, where verifier-generated tests lose discriminative power as solvers improve. We propose ACE, a solver–adversary self-evolving framework that replaces output-based verification with execution-centric adversarial supervision, achieving consistent gains in pass@k accuracy, out-of-distribution generalization, and inference efficiency across multiple code generation benchmarks.',
-    image: '/ace-pipeline.png',
+    image: import.meta.env.BASE_URL + 'ace-pipeline.png',
     links: {
       pdf: 'https://openreview.net/forum?id=ecKAmz5vlO',
       code: 'https://github.com/RunRiotComeOn',

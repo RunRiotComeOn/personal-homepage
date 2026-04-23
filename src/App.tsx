@@ -11,7 +11,7 @@ import Publications from './sections/Publications';
 import PersonalLife from './sections/PersonalLife';
 import Awards from './sections/Awards';
 import Contact from './sections/Contact';
-import VisitorMap from './sections/VisitorMap';
+// import VisitorMap from './sections/VisitorMap';
 import Footer from './sections/Footer';
 import './App.css';
 
@@ -60,7 +60,7 @@ function App() {
         <PersonalLife />
         <Awards />
         <Contact />
-        <VisitorMap />
+        {/* <VisitorMap /> */}
       </main>
       <Footer />
     </div>

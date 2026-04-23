@@ -7,13 +7,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 const researchData = [
   {
-    title: 'RA@Mitigating Overthinking in Reasoning VLMs via Dynamic Token Budgeting',
-    institution: 'University of California, Davis',
+    title: 'Learning Adaptive Reasoning Paths for Efficient Visual Reasoning',
+    institution: 'UC Davis',
     advisor: 'Prof. Muhao Chen',
+    advisorUrl: 'https://muhaochen.github.io/',
     location: 'Davis, CA, USA',
-    period: '2025 – Present',
-    description: 'Current reasoning VLMs suffer from severe overthinking, consuming excessive tokens, creating a critical need to reduce this redundancy while maintaining performance. Propose to adaptively allocate the thinking budgets based on the visual tasks difficulty, skipping reasoning steps for simpler queries. Train the model via SFT and RL to dynamically select the optimal inference path (Direct, Perception-based, or Reasoning-based) by incentivizing correctness and penalizing excessive reasoning tokens through a strictly constrained reward function.',
-    tags: ['Vision-Language Models', 'Reinforcement Learning', 'Efficiency'],
+    period: 'Sept. 2025 - March. 2026',
+    status: 'Submitted to COLM 2026 (first author)',
+    role: 'Research Assistant at UC Davis',
+    bullets: [
+      'Current reasoning Visual Reasoning Models (VRMs) suffer from severe overthinking, consuming excessive tokens, creating a critical need to reduce this redundancy while maintaining performance.',
+      'Proposed AVR, an adaptive visual reasoning training framework that decomposes visual reasoning into three cognitive functions: visual perception, logical reasoning, and answer application, enabling models to dynamically choose among three response formats: Full Format, Perception-Only Format, and Direct Answer.',
+      'Developed FS-GRPO, an adaptation of Group Relative Policy Optimization that encourages the model to select the most efficient reasoning format.',
+      'Achieved a token usage reduction of 50-90% while maintaining overall accuracy on various VQA benchmarks.',
+    ],
+    tags: ['Vision-Language Models', 'Visual Reasoning', 'Reinforcement Learning', 'Efficiency'],
   },
   {
     title: 'RA@ACE: Self-Evolving LLM Coding Framework via Adversarial Unit Test Generation and Preference Optimization',
@@ -141,13 +149,39 @@ export default function Research() {
 
                 {/* Advisor */}
                 <div className="text-sm text-[#6c757d]">
-                  Advisor: <span className="text-[#495057]">{project.advisor}</span>
+                  {project.status && (
+                    <div className="mb-1 text-[#495057] italic">{project.status}</div>
+                  )}
+                  {project.role && (
+                    <div className="mb-1 text-[#495057]">{project.role}</div>
+                  )}
+                  Advisor:{' '}
+                  {project.advisorUrl ? (
+                    <a
+                      href={project.advisorUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#495057] hover:text-black underline underline-offset-2"
+                    >
+                      {project.advisor}
+                    </a>
+                  ) : (
+                    <span className="text-[#495057]">{project.advisor}</span>
+                  )}
                 </div>
 
                 {/* Description */}
-                <p className="text-[#495057] leading-relaxed">
-                  {project.description}
-                </p>
+                {project.bullets ? (
+                  <ul className="list-disc pl-5 space-y-2 text-[#495057] leading-relaxed">
+                    {project.bullets.map((bullet, idx) => (
+                      <li key={idx}>{bullet}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-[#495057] leading-relaxed">
+                    {project.description}
+                  </p>
+                )}
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 pt-2">

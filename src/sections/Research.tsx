@@ -24,12 +24,19 @@ const researchData = [
     tags: ['Vision-Language Models', 'Visual Reasoning', 'Reinforcement Learning', 'Efficiency'],
   },
   {
-    title: 'RA@ACE: Self-Evolving LLM Coding Framework via Adversarial Unit Test Generation and Preference Optimization',
+    title: 'ACE: Self-Evolving LLM Coding Framework via Adversarial Unit Test Generation and Preference Optimization',
     institution: 'Fudan University',
     advisor: 'Prof. Zhongyu Wei',
+    advisorUrl: 'http://www.fudan-disc.com/people/zywei',
     location: 'Shanghai, China',
-    period: 'Jan 2026 – Mar 2026',
-    description: 'Identified feedback saturation in solver–verifier self-improvement for code generation, where verifier-generated tests lose discriminative power as solvers improve. Proposed ACE, a solver–adversary self-evolving framework that replaces output-based verification with execution-centric adversarial supervision, designing adversarial unit test generation without oracle outputs and constructing execution-derived preference signals to jointly optimize the solver via SFT and the adversary via KTO. Achieved consistent gains in pass@k accuracy, out-of-distribution generalization, and inference efficiency across multiple code generation benchmarks. In submission to ICLR 2026 RSI Workshop.',
+    period: 'Dec. 2025 - March. 2026',
+    status: 'ICLR 2026 Workshop RSI Spotlight (first author)',
+    role: 'Research Assistant at Fudan University',
+    bullets: [
+      'Identified feedback saturation in solver-verifier self-improvement for code generation, where verifier-generated tests lose discriminative power as solvers improve, failing to expose remaining execution-level failure modes.',
+      'Proposed ACE, a solver-adversary self-evolving framework that replaces output-based verification with execution-centric adversarial supervision. Designed adversarial unit test generation without oracle outputs or human annotation, and constructed execution-derived preference signals to jointly optimize the solver via SFT and the adversary via KTO in a stable multi-round loop.',
+      'Achieved consistent gains in pass@k accuracy, out-of-distribution generalization, and inference efficiency across multiple code generation benchmarks, outperforming strong solver-verifier baselines.',
+    ],
     tags: ['LLM', 'Code Generation', 'Preference Optimization', 'Self-Improvement'],
   },
   {
@@ -40,24 +47,6 @@ const researchData = [
     period: '2024 – Sept 2025',
     description: 'Worked on constructing a novel multi-modal benchmarking method through super-resolution technology using spatial omics data for diverse H&E foundation models.',
     tags: ['Spatial Omics', 'Super-Resolution', 'Benchmarking'],
-  },
-  {
-    title: 'AI-Powered Intestinal Polyp Diagnosis & Mobile Digital Ecosystem',
-    institution: 'Challenge Cup 2025',
-    advisor: 'Prof. Xiahai Zhuang and Prof. Zhiyuan Yuan',
-    location: 'Shanghai, China',
-    period: '2024 – Mar 2025',
-    description: 'Spearheaded the development of a YOLOv5-based diagnostic system using clinical data from Zhongshan Hospital; achieved real-time polyp detection and histological classification (benign vs. malignant) during colonoscopy procedures.',
-    tags: ['Computer Vision', 'Medical AI', 'YOLOv5'],
-  },
-  {
-    title: 'RA@AI-based Nb and Antigen Binding Site Prediction',
-    institution: 'Fudan University',
-    advisor: 'Prof. Yu Ding',
-    location: 'Shanghai, China',
-    period: '2023 – Sept 2024',
-    description: 'Investigated existing protein structure prediction models and studied the framework and application of MSA- and Transformer-based models.',
-    tags: ['Protein Structure', 'Transformers', 'Bioinformatics'],
   },
 ];
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { Mail, Github, Twitter, Gamepad2 } from 'lucide-react';
+import { Mail, Github, Twitter, Gamepad2, GraduationCap } from 'lucide-react';
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -182,6 +182,15 @@ export default function Hero() {
               >
                 <Mail size={20} />
                 Email
+              </a>
+              <a
+                href="https://scholar.google.com/citations?user=ZBJHQB0AAAAJ&hl=en&oi=sra"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-btn btn-magnetic inline-flex items-center justify-center gap-2 px-6 py-3 bg-white rounded-xl border border-[#dee2e6] shadow-sm font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200"
+              >
+                <GraduationCap size={20} />
+                Scholar
               </a>
               <a
                 href="https://github.com/RunRiotComeOn"

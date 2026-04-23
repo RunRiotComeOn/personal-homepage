@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, Github, Gamepad2, Twitter, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Github, Gamepad2, Twitter, Send, CheckCircle, AlertCircle, GraduationCap } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +13,12 @@ const socialLinks = [
     href: 'mailto:yixuhuang23@m.fudan.edu.cn',
     icon: Mail,
     color: 'hover:bg-red-50 hover:text-red-600 hover:border-red-200',
+  },
+  {
+    name: 'Scholar',
+    href: 'https://scholar.google.com/citations?user=ZBJHQB0AAAAJ&hl=en&oi=sra',
+    icon: GraduationCap,
+    color: 'hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200',
   },
   {
     name: 'GitHub',

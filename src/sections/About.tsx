@@ -144,14 +144,15 @@ export default function About() {
               <p className="about-para text-lg">
                 I am currently working under the supervision of{' '}
                 <a 
-                  href="https://muhaochen.github.io/" 
+                  href="https://jiaqima.github.io/" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#343a40] font-semibold hover:underline transition-all"
                 >
-                  Professor Muhao Chen
+                  Prof. Jiaqi W. Ma
                 </a>{' '}
-                at UC Davis, conducting research on Vision-Language Models and their applications.
+                at UIUC, conducting research on continual learning methods that enable agentic 
+                systems to adapt over time while preserving robust reasoning, memory, and decision-making capabilities.
               </p>
               
               <p className="about-para text-lg">

@@ -1,52 +1,73 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FlaskConical, Building2, Calendar } from 'lucide-react';
+import { Calendar, ExternalLink, GraduationCap } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const researchData = [
   {
-    title: 'Learning Adaptive Reasoning Paths for Efficient Visual Reasoning',
     institution: 'UC Davis',
-    advisor: 'Prof. Muhao Chen',
-    advisorUrl: 'https://muhaochen.github.io/',
-    location: 'Davis, CA, USA',
-    period: 'Sept. 2025 - March. 2026',
-    status: 'Submitted to COLM 2026 (first author)',
-    role: 'Research Assistant at UC Davis',
-    bullets: [
-      'Current reasoning Visual Reasoning Models (VRMs) suffer from severe overthinking, consuming excessive tokens, creating a critical need to reduce this redundancy while maintaining performance.',
-      'Proposed AVR, an adaptive visual reasoning training framework that decomposes visual reasoning into three cognitive functions: visual perception, logical reasoning, and answer application, enabling models to dynamically choose among three response formats: Full Format, Perception-Only Format, and Direct Answer.',
-      'Developed FS-GRPO, an adaptation of Group Relative Policy Optimization that encourages the model to select the most efficient reasoning format.',
-      'Achieved a token usage reduction of 50-90% while maintaining overall accuracy on various VQA benchmarks.',
+    lab: 'LUKA Lab',
+    year: '2026',
+    logo: import.meta.env.BASE_URL + 'uc-davis-logo.svg',
+    accent: '#022851',
+    people: [
+      {
+        label: 'Advised by',
+        names: [
+          {
+            name: 'Prof. Muhao Chen',
+            url: 'https://muhaochen.github.io/',
+          },
+        ],
+      },
+      {
+        label: 'Working closely with',
+        names: [
+          {
+            name: 'Tinghui Zhu',
+            url: 'https://darthzhu.github.io/',
+          },
+        ],
+      },
     ],
-    tags: ['Vision-Language Models', 'Visual Reasoning', 'Reinforcement Learning', 'Efficiency'],
   },
   {
-    title: 'ACE: Self-Evolving LLM Coding Framework via Adversarial Unit Test Generation and Preference Optimization',
-    institution: 'Fudan University',
-    advisor: 'Prof. Zhongyu Wei',
-    advisorUrl: 'http://www.fudan-disc.com/people/zywei',
-    location: 'Shanghai, China',
-    period: 'Dec. 2025 - March. 2026',
-    status: 'ICLR 2026 Workshop RSI Spotlight (first author)',
-    role: 'Research Assistant at Fudan University',
-    bullets: [
-      'Identified feedback saturation in solver-verifier self-improvement for code generation, where verifier-generated tests lose discriminative power as solvers improve, failing to expose remaining execution-level failure modes.',
-      'Proposed ACE, a solver-adversary self-evolving framework that replaces output-based verification with execution-centric adversarial supervision. Designed adversarial unit test generation without oracle outputs or human annotation, and constructed execution-derived preference signals to jointly optimize the solver via SFT and the adversary via KTO in a stable multi-round loop.',
-      'Achieved consistent gains in pass@k accuracy, out-of-distribution generalization, and inference efficiency across multiple code generation benchmarks, outperforming strong solver-verifier baselines.',
+    institution: 'UIUC',
+    lab: 'TRAIS Lab',
+    year: '2026',
+    logo: import.meta.env.BASE_URL + 'uiuc-logo.svg',
+    accent: '#e84a27',
+    people: [
+      {
+        label: 'Advised by',
+        names: [
+          {
+            name: 'Prof. Jiaqi W. Ma',
+            url: 'https://jiaqima.github.io/',
+          },
+        ],
+      },
     ],
-    tags: ['LLM', 'Code Generation', 'Preference Optimization', 'Self-Improvement'],
   },
   {
-    title: 'RA@Super-Resolution Spatial Omics Benchmarking',
     institution: 'Fudan University',
-    advisor: 'Prof. Zhiyuan Yuan',
-    location: 'Shanghai, China',
-    period: '2024 – Sept 2025',
-    description: 'Worked on constructing a novel multi-modal benchmarking method through super-resolution technology using spatial omics data for diverse H&E foundation models.',
-    tags: ['Spatial Omics', 'Super-Resolution', 'Benchmarking'],
+    lab: 'DISC Lab',
+    year: '2025',
+    logo: import.meta.env.BASE_URL + 'fudan-logo.svg',
+    accent: '#9b1c31',
+    people: [
+      {
+        label: 'Advised by',
+        names: [
+          {
+            name: 'Prof. Zhongyu Wei',
+            url: 'http://www.fudan-disc.com/people/zywei',
+          },
+        ],
+      },
+    ],
   },
 ];
 
@@ -109,79 +130,65 @@ export default function Research() {
         </div>
 
         {/* Research cards */}
-        <div className="space-y-8">
-          {researchData.map((project, index) => (
+        <div className="relative space-y-5">
+          <div className="absolute left-8 top-10 bottom-10 hidden w-px bg-gradient-to-b from-transparent via-[#ced4da] to-transparent lg:block" />
+          {researchData.map((experience, index) => (
             <div
               key={index}
-              className="research-card card-3d bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-[#dee2e6] group cursor-pointer"
+              className="research-card group relative overflow-hidden rounded-2xl border border-[#dee2e6] bg-white/95 p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg lg:p-6"
             >
-              <div className="flex flex-col gap-4">
-                {/* Header */}
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-2">
+              <div
+                className="absolute inset-y-0 left-0 w-1.5"
+                style={{ backgroundColor: experience.accent }}
+              />
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+                <div className="flex items-center gap-4 sm:w-64 sm:flex-shrink-0">
+                  <div className="grid h-20 w-20 flex-shrink-0 place-items-center rounded-2xl border border-[#dee2e6] bg-[#f8f9fa] p-3 shadow-inner">
+                    <img
+                      src={experience.logo}
+                      alt={`${experience.institution} logo`}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
                   <div>
-                    <h3 className="font-serif text-xl lg:text-2xl font-bold text-[#343a40] group-hover:text-black transition-colors flex items-center gap-3">
-                      <FlaskConical size={24} className="text-[#6c757d]" />
-                      {project.title}
+                    <div className="flex items-center gap-2 text-sm font-medium text-[#6c757d]">
+                      <Calendar size={15} />
+                      {experience.year}
+                    </div>
+                    <h3 className="mt-1 font-serif text-xl font-bold text-[#343a40] transition-colors group-hover:text-black">
+                      {experience.institution}
                     </h3>
-                  </div>
-                  <div className="flex items-center gap-4 text-sm text-[#6c757d]">
-                    <span className="flex items-center gap-1">
-                      <Building2 size={14} />
-                      {project.institution}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Calendar size={14} />
-                      {project.period}
-                    </span>
+                    <div className="mt-1 flex items-center gap-2 text-base font-semibold text-[#495057]">
+                      <GraduationCap size={17} />
+                      {experience.lab}
+                    </div>
                   </div>
                 </div>
 
-                {/* Advisor */}
-                <div className="text-sm text-[#6c757d]">
-                  {project.status && (
-                    <div className="mb-1 text-[#495057] italic">{project.status}</div>
-                  )}
-                  {project.role && (
-                    <div className="mb-1 text-[#495057]">{project.role}</div>
-                  )}
-                  Advisor:{' '}
-                  {project.advisorUrl ? (
-                    <a
-                      href={project.advisorUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#495057] hover:text-black underline underline-offset-2"
-                    >
-                      {project.advisor}
-                    </a>
-                  ) : (
-                    <span className="text-[#495057]">{project.advisor}</span>
-                  )}
-                </div>
-
-                {/* Description */}
-                {project.bullets ? (
-                  <ul className="list-disc pl-5 space-y-2 text-[#495057] leading-relaxed">
-                    {project.bullets.map((bullet, idx) => (
-                      <li key={idx}>{bullet}</li>
+                <div className="min-w-0 flex-1 border-t border-[#e9ecef] pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+                  <div className="space-y-3">
+                    {experience.people.map((group) => (
+                      <div key={group.label} className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
+                        <span className="w-40 flex-shrink-0 text-xs font-semibold uppercase tracking-[0.08em] text-[#868e96]">
+                          {group.label}
+                        </span>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1">
+                          {group.names.map((person) => (
+                            <a
+                              key={person.name}
+                              href={person.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 font-medium text-[#343a40] underline decoration-[#ced4da] underline-offset-4 transition-colors hover:text-black hover:decoration-[#343a40]"
+                            >
+                              {person.name}
+                              <ExternalLink size={14} />
+                            </a>
+                          ))}
+                        </div>
+                      </div>
                     ))}
-                  </ul>
-                ) : (
-                  <p className="text-[#495057] leading-relaxed">
-                    {project.description}
-                  </p>
-                )}
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {project.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-[#f8f9fa] text-[#495057] text-xs font-medium rounded-full border border-[#dee2e6]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                  </div>
                 </div>
               </div>
             </div>

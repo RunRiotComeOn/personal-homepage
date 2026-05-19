@@ -7,6 +7,24 @@ gsap.registerPlugin(ScrollTrigger);
 
 const researchData = [
   {
+    institution: 'UIUC',
+    lab: 'TRAIS Lab',
+    year: '2026',
+    logo: import.meta.env.BASE_URL + 'uiuc-logo.svg',
+    accent: '#e84a27',
+    people: [
+      {
+        label: 'Advised by',
+        names: [
+          {
+            name: 'Prof. Jiaqi W. Ma',
+            url: 'https://jiaqima.github.io/',
+          },
+        ],
+      },
+    ],
+  },
+  {
     institution: 'UC Davis',
     lab: 'LUKA Lab',
     year: '2026',
@@ -28,24 +46,6 @@ const researchData = [
           {
             name: 'Tinghui Zhu',
             url: 'https://darthzhu.github.io/',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    institution: 'UIUC',
-    lab: 'TRAIS Lab',
-    year: '2026',
-    logo: import.meta.env.BASE_URL + 'uiuc-logo.svg',
-    accent: '#e84a27',
-    people: [
-      {
-        label: 'Advised by',
-        names: [
-          {
-            name: 'Prof. Jiaqi W. Ma',
-            url: 'https://jiaqima.github.io/',
           },
         ],
       },

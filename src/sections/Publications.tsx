@@ -44,6 +44,18 @@ const publications = [
   },
 ];
 
+function renderAuthors(authors: string) {
+  const name = 'Yixu Huang';
+  const parts = authors.split(name);
+
+  return parts.map((part, index) => (
+    <span key={`${part}-${index}`}>
+      {index > 0 && <strong className="font-semibold text-[#343a40]">{name}</strong>}
+      {part}
+    </span>
+  ));
+}
+
 export default function Publications() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -125,7 +137,7 @@ export default function Publications() {
               <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-[#6c757d]">
                 <span className="flex items-center gap-1">
                   <Users size={14} />
-                  {pub.authors}
+                  <span>{renderAuthors(pub.authors)}</span>
                 </span>
                 <span className="flex items-center gap-1">
                   <BookOpen size={14} />

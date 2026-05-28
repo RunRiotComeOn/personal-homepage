@@ -1,11 +1,23 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FileText, Users, BookOpen, ExternalLink, Code } from 'lucide-react';
+import { FileText, Users, BookOpen, ExternalLink, Code, Globe } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const publications = [
+  {
+    title: 'GUI Agents for Continual Game Generation',
+    authors: 'Yixu Huang*, Bo Li*, Na Li*, Zhe Wang, et al.',
+    venue: 'arXiv 2026',
+    type: 'Preprint',
+    abstract: 'We study how GUI agents can make game generation more interactive and reliable by acting as both objective evaluators and subjective playtesters. We introduce PlaytestArena, a browser-based evaluation environment with 200 game generation tasks across eight genres, and Play2Code, a sustained coding-and-playing loop where a game agent and GUI agent share memory and iteratively improve playable games. Experiments show that Play2Code substantially improves rubric pass rates over single-pass and agentic-coding baselines, positioning game playtesting as a rich testbed for interactive code generation.',
+    image: import.meta.env.BASE_URL + 'play2code-overview.png',
+    links: {
+      pdf: 'https://arxiv.org/abs/2605.28258',
+      project: 'https://continual-game-generation.vercel.app/',
+    },
+  },
   {
     title: 'Learning Adaptive Reasoning Paths for Efficient Visual Reasoning',
     authors: 'Yixu Huang, Tinghui Zhu, Muhao Chen',
@@ -147,21 +159,36 @@ export default function Publications() {
                 {pub.links.pdf && (
                   <a
                     href={pub.links.pdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 text-sm text-[#343a40] font-medium hover:text-black transition-colors"
                   >
                     <ExternalLink size={16} />
                     PDF
                   </a>
                 )}
-                <a
-                  href={pub.links.code}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-[#343a40] font-medium hover:text-black transition-colors"
-                >
-                  <Code size={16} />
-                  Code
-                </a>
+                {pub.links.project && (
+                  <a
+                    href={pub.links.project}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-[#343a40] font-medium hover:text-black transition-colors"
+                  >
+                    <Globe size={16} />
+                    Project
+                  </a>
+                )}
+                {pub.links.code && (
+                  <a
+                    href={pub.links.code}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-[#343a40] font-medium hover:text-black transition-colors"
+                  >
+                    <Code size={16} />
+                    Code
+                  </a>
+                )}
               </div>
             </div>
           ))}

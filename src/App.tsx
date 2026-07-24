@@ -475,33 +475,34 @@ function App() {
             ))}
           </div>
 
-          <a
-            className="game-link"
-            href="https://yxsophie.itch.io/one-button-boss"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span>
+          <div className="interest-links">
+            <a
+              className="interest-link"
+              href="https://yxsophie.itch.io/one-button-boss"
+              target="_blank"
+              rel="noreferrer"
+            >
               <Gamepad2 size={20} />
-              A side project for fun
-            </span>
-            <strong>Play One Button Boss</strong>
-            <ExternalLink size={18} />
-          </a>
+              <span>
+                I build games for fun—play <strong>One Button Boss</strong>.
+              </span>
+              <ExternalLink size={17} />
+            </a>
 
-          <a
-            className="gemstone-link"
-            href="https://runriotcomeon.github.io/Global_Gemstone_Map/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Gem size={19} />
-            <span>
-              I&apos;m also fascinated by gemstones—explore the{' '}
-              <strong>Global Gemstone Map</strong>.
-            </span>
-            <ExternalLink size={17} />
-          </a>
+            <a
+              className="interest-link"
+              href="https://runriotcomeon.github.io/Global_Gemstone_Map/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Gem size={20} />
+              <span>
+                I&apos;m also fascinated by gemstones—explore the{' '}
+                <strong>Global Gemstone Map</strong>.
+              </span>
+              <ExternalLink size={17} />
+            </a>
+          </div>
         </section>
 
         <section className="contact-section" id="contact">

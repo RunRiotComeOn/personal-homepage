@@ -124,7 +124,8 @@
 }
 
 .hero-section {
-  min-height: 690px;
+  min-height: calc(100vh - 104px);
+  min-height: calc(100svh - 104px);
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(310px, 0.9fr);
   align-items: center;
@@ -286,7 +287,6 @@
   margin: 0 calc(50% - 50vw);
   padding: 88px max(24px, calc((100vw - 1180px) / 2));
   background: var(--blue);
-  border-bottom: 1px solid var(--ink);
 }
 
 .principles-label {
@@ -837,7 +837,8 @@ footer a {
   }
 
   .hero-section {
-    min-height: auto;
+    min-height: calc(100vh - 86px);
+    min-height: calc(100svh - 86px);
     grid-template-columns: 1fr;
     padding: 50px 0 72px;
   }

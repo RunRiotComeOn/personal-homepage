@@ -700,6 +700,34 @@
   text-underline-offset: 4px;
 }
 
+.gemstone-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.gemstone-link > svg:first-child {
+  color: var(--blue-dark);
+}
+
+.gemstone-link strong {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--blue);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.gemstone-link:hover strong {
+  color: var(--blue-dark);
+}
+
 .contact-section {
   margin: 0 calc(50% - 50vw);
   padding: 100px max(24px, calc((100vw - 1180px) / 2));

@@ -5,6 +5,7 @@ import {
   CalendarDays,
   ExternalLink,
   Gamepad2,
+  Gem,
   Github,
   GraduationCap,
   Mail,
@@ -486,6 +487,20 @@ function App() {
             </span>
             <strong>Play One Button Boss</strong>
             <ExternalLink size={18} />
+          </a>
+
+          <a
+            className="gemstone-link"
+            href="https://runriotcomeon.github.io/Global_Gemstone_Map/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Gem size={19} />
+            <span>
+              I&apos;m also fascinated by gemstones—explore the{' '}
+              <strong>Global Gemstone Map</strong>.
+            </span>
+            <ExternalLink size={17} />
           </a>
         </section>
 

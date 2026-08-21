@@ -84,7 +84,7 @@ const publications = [
     title: 'GUI Agents for Continual Game Generation',
     authors: 'Yixu Huang*, Bo Li*, Na Li*, Zhe Wang, et al.',
     venue: 'EMNLP 2026 Findings',
-    type: 'Conference Paper',
+    type: 'Poster',
     image: `${import.meta.env.BASE_URL}play2code-overview.png`,
     description:
       'PlaytestArena and Play2Code turn game playtesting into a sustained coding-and-playing loop, enabling GUI agents to evaluate and improve playable games.',

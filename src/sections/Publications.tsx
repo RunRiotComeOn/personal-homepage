@@ -9,8 +9,8 @@ const publications = [
   {
     title: 'GUI Agents for Continual Game Generation',
     authors: 'Yixu Huang*, Bo Li*, Na Li*, Zhe Wang, et al.',
-    venue: 'arXiv 2026',
-    type: 'Preprint',
+    venue: 'EMNLP 2026 Findings',
+    type: 'Conference Paper',
     abstract: 'We study how GUI agents can make game generation more interactive and reliable by acting as both objective evaluators and subjective playtesters. We introduce PlaytestArena, a browser-based evaluation environment with 200 game generation tasks across eight genres, and Play2Code, a sustained coding-and-playing loop where a game agent and GUI agent share memory and iteratively improve playable games. Experiments show that Play2Code substantially improves rubric pass rates over single-pass and agentic-coding baselines, positioning game playtesting as a rich testbed for interactive code generation.',
     image: import.meta.env.BASE_URL + 'play2code-overview.png',
     links: {

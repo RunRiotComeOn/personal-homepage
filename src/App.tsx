@@ -3,6 +3,7 @@ import {
   ArrowUpRight,
   BookOpen,
   CalendarDays,
+  Camera,
   ExternalLink,
   Gamepad2,
   Gem,
@@ -11,6 +12,8 @@ import {
   Mail,
   MapPin,
   Menu,
+  Music2,
+  Plane,
   Trophy,
   X,
 } from 'lucide-react';
@@ -462,17 +465,8 @@ function App() {
             </SectionHeading>
             <div className="life-notes">
               <p>
-                I have completed Grade 10 in China&apos;s amateur piano grading
-                system and reached Performance Grade Level I. Beyond the piano,
-                I also play the zhongruan, ukulele, and handpan.
-              </p>
-              <p>
-                I have visited nearly 20 countries—and I am always ready to
-                explore one more.
-              </p>
-              <p>
-                I have long wanted to publish a photobook of my own and give
-                rock climbing a try.
+                Beyond research, I enjoy making, exploring, and staying curious
+                through music, travel, and creative projects.
               </p>
             </div>
           </div>
@@ -487,8 +481,33 @@ function App() {
           </div>
 
           <div className="interest-links">
+            <div className="interest-item">
+              <Music2 size={20} />
+              <span>
+                I have completed Grade 10 in China&apos;s amateur piano grading
+                system and reached Performance Grade Level I. Beyond the piano,
+                I also play the zhongruan, ukulele, and handpan.
+              </span>
+            </div>
+
+            <div className="interest-item">
+              <Plane size={20} />
+              <span>
+                I have visited nearly 20 countries—and I am always ready to
+                explore one more.
+              </span>
+            </div>
+
+            <div className="interest-item">
+              <Camera size={20} />
+              <span>
+                I have long wanted to publish a photobook of my own and give
+                rock climbing a try.
+              </span>
+            </div>
+
             <a
-              className="interest-link"
+              className="interest-item interest-link"
               href="https://yxsophie.itch.io/one-button-boss"
               target="_blank"
               rel="noreferrer"
@@ -501,7 +520,7 @@ function App() {
             </a>
 
             <a
-              className="interest-link"
+              className="interest-item interest-link"
               href="https://runriotcomeon.github.io/Global_Gemstone_Map/"
               target="_blank"
               rel="noreferrer"

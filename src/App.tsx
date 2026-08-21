@@ -460,10 +460,21 @@ function App() {
             <SectionHeading eyebrow="04 / OFF THE CLOCK">
               Personal life
             </SectionHeading>
-            <p>
-              Diverse experiences fuel the way I think and make. I have visited
-              nearly 20 countries—and I am always ready to explore one more.
-            </p>
+            <div className="life-notes">
+              <p>
+                I have completed Grade 10 in China&apos;s amateur piano grading
+                system and reached Performance Grade Level I. Beyond the piano,
+                I also play the zhongruan, ukulele, and handpan.
+              </p>
+              <p>
+                I have visited nearly 20 countries—and I am always ready to
+                explore one more.
+              </p>
+              <p>
+                I have long wanted to publish a photobook of my own and give
+                rock climbing a try.
+              </p>
+            </div>
           </div>
 
           <div className="life-grid">

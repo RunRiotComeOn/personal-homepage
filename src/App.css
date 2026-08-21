@@ -601,7 +601,7 @@
 .life-heading {
   display: grid;
   grid-template-columns: 1.7fr 1fr;
-  align-items: end;
+  align-items: start;
   gap: 80px;
 }
 
@@ -615,16 +615,27 @@
   margin-bottom: 18px;
 }
 
-.life-heading > p {
+.life-notes {
   margin: 0 0 48px;
+}
+
+.life-notes p {
+  margin: 0;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.7;
 }
 
+.life-notes p + p {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
 .life-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  align-items: start;
   gap: 12px;
 }
 
@@ -633,10 +644,6 @@
   margin: 0;
   overflow: hidden;
   background: #dfeaf5;
-}
-
-.life-grid figure:nth-child(even) {
-  margin-top: 34px;
 }
 
 .life-grid img {
@@ -971,7 +978,4 @@ footer a {
     gap: 8px;
   }
 
-  .life-grid figure:nth-child(even) {
-    margin-top: 18px;
-  }
 }

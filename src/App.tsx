@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowUpRight,
+  Biohazard,
   BookOpen,
   CalendarDays,
   Camera,
@@ -251,11 +252,12 @@ function App() {
               <p>
                 I am an undergraduate student at{' '}
                 <strong className="blue-underline">Fudan University</strong>,
-                studying Data Science and Big Data Technology. My research sits
-                at the intersection of{' '}
+                studying Data Science and Big Data Technology. My research
+                interests span{' '}
                 <span className="blue-underline">large language models</span>,{' '}
                 <span className="blue-underline">multimodal intelligence</span>,
-                and <span className="blue-underline">agentic systems</span>.
+                <span className="blue-underline">agentic systems</span>, and{' '}
+                <span className="blue-underline">game AI</span>.
               </p>
               <p>
                 I am currently working with{' '}
@@ -532,6 +534,14 @@ function App() {
               </span>
               <ExternalLink size={17} />
             </a>
+
+            <div className="interest-item">
+              <Biohazard size={20} />
+              <span>
+                I&apos;m a huge <strong>Resident Evil</strong> fan—if you are too,
+                I&apos;d love to chat about the series, its lore, and survival horror.
+              </span>
+            </div>
           </div>
         </section>
 

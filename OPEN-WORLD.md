@@ -49,3 +49,16 @@ React owns the accessible field guide, Radix dialogs/switches, touch controls, a
 - **Orca** — Poly by Google, via [Poly Pizza](https://poly.pizza/m/5p9B6IebY-A), [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). Original binary in `public/models/orca.glb`; rescaled/recolored at runtime and given eye patches for visibility. Attribution also appears in the in-game settings.
 - Visual/interaction inspiration: [Bruno Simon](https://bruno-simon.com/), [folio-2025](https://github.com/brunosimon/folio-2025), and [长尾森林](https://longtailwriter.com/). No reference code or artwork is copied into this implementation.
 - Three.js (MIT), React (MIT), Radix UI (MIT), Lucide (ISC). Google Fonts: DM Sans and Libre Caslon Display (SIL Open Font License), with system-font fallbacks.
+
+## Art revision 2
+
+The initial low-poly art pass has been replaced, following review:
+
+- Orca vertices are normalized, welded for smooth normals, and deformed from rest coordinates every frame. A travelling dorsoventral wave bends the peduncle and pitches the tail flukes; pectoral fins balance independently and steering bends the body. Speed controls stroke frequency and amplitude. This is vertex animation, not a skeleton or a rigid whole-model sway.
+- Conical trees are replaced by original gouache willow canopies on crossed, wind-deformed geometry with physical trunks and branches. Rocks, plaster, wood, and roofs use original pigment texture and bump detail.
+- Islands have radial height-field terrain and irregular coastlines. Cottages have overlapping shingles, masonry foundations, shutters, mullions, doors, hardware, flower boxes, and brick chimneys. Docks have individual planks, posts, sagging rope and framed lanterns; observatory and lighthouse have dedicated detailed geometry.
+- Water has a much finer displacement grid, multiscale pigment, moving brush marks, advancing/receding coastal foam, shallow caustics, Fresnel response and fragmented moonlight. An edge-preserving painterly postprocess adds paper grain without discarding object edges; the lower-cost graphics mode skips its neighborhood filter.
+- `scripts/check-ocean-art.ts` checks a stationary head, idle and fast tail excursions, opposite steering bends, deterministic non-accumulating deformation, finite mesh coordinates and shape-preserving batching. In its representative scene, batching reduces 645 source meshes to 62 draw calls (geometry only; not an FPS measurement).
+- Original generated assets and exact prompts are in `public/art/README.md`.
+
+The browser policy restriction from revision 1 remains unresolved. Production compilation and CPU geometry/motion checks do not constitute a visual sign-off or proof of mobile frame rate. No exact parity with the reference is claimed.

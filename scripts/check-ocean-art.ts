@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import * as THREE from 'three';
+import { StorybookArt } from '../src/ocean/art';
+import { deformOrca } from '../src/ocean/orcaMotion';
+const amplitude=(speed:number)=>{
+ const ys=Array.from({length:100},(_,i)=>deformOrca(.5,-.3,3.5,{phase:i/100*Math.PI*2,speed,turn:0,breach:0})[1]);return Math.max(...ys)-Math.min(...ys);
+};
+assert(amplitude(0)>.20,'The idle tail must move even while the orca is stationary');
+assert(amplitude(20)>amplitude(0)*2,'Swimming faster must increase the propulsive tail stroke');
+for(let i=0;i<100;i++)assert.deepEqual(deformOrca(0,0,-3,{phase:i,speed:20,turn:1,breach:0}),[0,0,-3],'The head should not be dragged by the tail wave');
+const sample=[.4,-.2,3.2] as const,pose={phase:1.2,speed:10,turn:.3,breach:0};const baseline=deformOrca(...sample,pose);
+for(let i=0;i<10000;i++)assert.deepEqual(deformOrca(...sample,pose),baseline,'Deformation must always start from rest vertices; no accumulating drift');
+assert(deformOrca(...sample,{...pose,turn:1})[0]>deformOrca(...sample,{...pose,turn:-1})[0],'Steering bends the tail in opposite directions');
+const art=new StorybookArt({paper:new THREE.Texture(),leaves:new THREE.Texture()}),scene=new THREE.Scene();
+art.terrain(scene,13,0);art.cottage(scene,'home');art.dock(scene,13);art.willow(scene,-7,-5,.8);art.lighthouse(scene);art.observatory(scene);
+let before=0,triangles=0;scene.updateMatrixWorld(true);const boundsBefore=new THREE.Box3().setFromObject(scene,true);
+scene.traverse(o=>{if(o instanceof THREE.Mesh){before++;const p=o.geometry.attributes.position;for(const v of p.array)assert(Number.isFinite(v),'Geometry must have no NaN/Infinity coordinates');triangles+=(o.geometry.index?.count??p.count)/3;}});
+assert(before>400,'Detailed cottages, docks, and landmark parts must actually be built');
+art.merge(scene,new Set());let after=0;scene.traverse(o=>{if(o instanceof THREE.Mesh)after++;});const boundsAfter=new THREE.Box3().setFromObject(scene,true);
+assert(boundsBefore.min.distanceTo(boundsAfter.min)<1e-4&&boundsBefore.max.distanceTo(boundsAfter.max)<1e-4,'Batching must preserve world-space geometry bounds');
+assert(after<before*.2,'Static material batching must reduce draw calls by at least 80%');
+console.log(JSON.stringify({idleTailExcursion:amplitude(0),glidingTailExcursion:amplitude(20),sourceMeshes:before,batchedMeshes:after,triangles,checks:'head stability, propulsive stroke, steering, no drift, valid geometry, batching bounds'},null,2));
+art.dispose();

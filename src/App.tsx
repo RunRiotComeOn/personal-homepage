@@ -1,574 +1,89 @@
-import { useEffect, useState } from 'react';
-import {
-  ArrowUpRight,
-  Biohazard,
-  BookOpen,
-  CalendarDays,
-  Camera,
-  ExternalLink,
-  Gamepad2,
-  Gem,
-  Github,
-  GraduationCap,
-  Mail,
-  MapPin,
-  Menu,
-  Music2,
-  Plane,
-  Trophy,
-  X,
-} from 'lucide-react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { Waves, Map as MapIcon, BookOpen, Volume2, VolumeX, Compass, ArrowUpRight, Navigation, Sparkles, Flag, Camera, Settings2, RotateCcw, Check, ChevronRight, X, Mail, ArrowUp, MoveUpRight } from 'lucide-react';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from './components/ui/dialog';
+import { Switch } from './components/ui/switch';
+import { places, pearlPoints, racePoints, papers, labs, awards, socials, asset, homeUrl } from './ocean/data';
+import type { PlaceId } from './ocean/data';
+import type { OceanWorld } from './ocean/world';
+import type { WorldState, WorldOptions } from './ocean/state';
+import { initialState } from './ocean/state';
+import './index.css';
 import './App.css';
-
-const navLinks = [
-  { label: 'ABOUT', href: '#about' },
-  { label: 'PRINCIPLES', href: '#principles' },
-  { label: 'RESEARCH', href: '#research' },
-  { label: 'PUBLICATIONS', href: '#publications' },
-  { label: 'EXPERIENCE', href: '#experience' },
-  { label: 'LIFE', href: '#life' },
-  { label: 'CONTACT', href: '#contact' },
-];
-
-const researchExperiences = [
-  {
-    institution: 'UIUC',
-    lab: 'TRAIS Lab',
-    year: '2026',
-    logo: `${import.meta.env.BASE_URL}uiuc-logo.svg`,
-    details: (
-      <>
-        Advised by{' '}
-        <a href="https://jiaqima.github.io/" target="_blank" rel="noreferrer">
-          Prof. Jiaqi W. Ma
-        </a>
-      </>
-    ),
-  },
-  {
-    institution: 'UC Davis',
-    lab: 'LUKA Lab',
-    year: '2026',
-    logo: `${import.meta.env.BASE_URL}uc-davis-logo.svg`,
-    details: (
-      <>
-        Advised by{' '}
-        <a href="https://muhaochen.github.io/" target="_blank" rel="noreferrer">
-          Prof. Muhao Chen
-        </a>
-        ; working closely with{' '}
-        <a href="https://darthzhu.github.io/" target="_blank" rel="noreferrer">
-          Tinghui Zhu
-        </a>
-      </>
-    ),
-  },
-  {
-    institution: 'Fudan University',
-    lab: 'DISC Lab',
-    year: '2025',
-    logo: `${import.meta.env.BASE_URL}fudan-logo.svg`,
-    details: (
-      <>
-        Advised by{' '}
-        <a
-          href="http://www.fudan-disc.com/people/zywei"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Prof. Zhongyu Wei
-        </a>
-      </>
-    ),
-  },
-];
-
-const publications = [
-  {
-    title: 'GUI Agents for Continual Game Generation',
-    authors: 'Yixu Huang*, Bo Li*, Na Li*, Zhe Wang, et al.',
-    venue: 'EMNLP 2026 Findings',
-    type: 'Poster',
-    image: `${import.meta.env.BASE_URL}play2code-overview.png`,
-    description:
-      'PlaytestArena and Play2Code turn game playtesting into a sustained coding-and-playing loop, enabling GUI agents to evaluate and improve playable games.',
-    links: [
-      { label: 'Paper', href: 'https://arxiv.org/abs/2605.28258' },
-      {
-        label: 'Project',
-        href: 'https://continual-game-generation.vercel.app/',
-      },
-    ],
-  },
-  {
-    title: 'Learning Adaptive Reasoning Paths for Efficient Visual Reasoning',
-    authors: 'Yixu Huang, Tinghui Zhu, Muhao Chen',
-    venue: 'arXiv 2026',
-    type: 'Preprint',
-    image: `${import.meta.env.BASE_URL}avr-figure1.png`,
-    description:
-      'AVR dynamically selects efficient visual reasoning paths while preserving correctness, reducing token usage by 50–90% across VQA benchmarks.',
-    links: [
-      { label: 'Paper', href: 'https://arxiv.org/abs/2604.14568' },
-      { label: 'Code', href: 'https://github.com/RunRiotComeOn/AVR' },
-    ],
-  },
-  {
-    title:
-      'ACE: Self-Evolving LLM Coding Framework via Adversarial Unit Test Generation and Preference Optimization',
-    authors: 'Yixu Huang, Xinglei Yu, Zhongyu Wei',
-    venue: 'ICLR 2026 Workshop RSI',
-    type: 'Spotlight',
-    image: `${import.meta.env.BASE_URL}ace-pipeline.png`,
-    description:
-      'ACE replaces saturated output-based verification with execution-centric adversarial supervision for stronger code generation and generalization.',
-    links: [
-      { label: 'Paper', href: 'https://arxiv.org/abs/2605.16299' },
-      { label: 'Code', href: 'https://github.com/RunRiotComeOn' },
-    ],
-  },
-];
-
-const education = [
-  {
-    period: '2025 · Fall',
-    school: 'University of California, Davis',
-    degree: 'Exchange Student in Computer Science',
-    place: 'Davis, California',
-  },
-  {
-    period: '2023 — Present',
-    school: 'Fudan University',
-    degree: 'B.S. in Data Science and Big Data Technology',
-    place: 'Shanghai, China',
-  },
-];
-
-const awards = [
-  ['2025', "Dean's Honor List", 'UC Davis College of Engineering · Top 8%'],
-  [
-    '2025',
-    'Second Prize',
-    'China Undergraduate Mathematical Contest in Modeling',
-  ],
-  ['2024', 'First-class Scholarship', 'Fudan University · Top 5%'],
-  ['2024', 'Outstanding Student Award', 'Fudan University · Top 5%'],
-];
-
-const lifeImages = [
-  {
-    src: `${import.meta.env.BASE_URL}life-hiking.jpg`,
-    label: 'Hiking',
-    alt: 'Hiking in the mountains',
-  },
-  {
-    src: `${import.meta.env.BASE_URL}life-photography.jpg`,
-    label: 'Photography',
-    alt: 'Photography',
-  },
-  {
-    src: `${import.meta.env.BASE_URL}life-travel.jpg`,
-    label: 'Travel',
-    alt: 'Traveling',
-  },
-  {
-    src: `${import.meta.env.BASE_URL}life-reading.jpg`,
-    label: 'Reading',
-    alt: 'Reading',
-  },
-];
-
-function SectionHeading({
-  eyebrow,
-  children,
-}: {
-  eyebrow: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="section-heading">
-      <span>{eyebrow}</span>
-      <h2>{children}</h2>
-    </div>
-  );
+const ContactForm = lazy(()=>import('./ocean/ContactForm'));
+type Panel = PlaceId|'map'|'journal'|'settings'|'help'|null;
+const placeIcons = ['01','02','03','04','05','06'];
+function Link({href,children}:{href:string;children:React.ReactNode}) {return <a href={href} target={href.startsWith('mailto:')?undefined:'_blank'} rel="noopener noreferrer">{children}<ArrowUpRight size={15}/></a>;}
+function MapView({state,large=false,travel}:{state:WorldState;large?:boolean;travel?:(p:PlaceId)=>void}) {
+ return <svg className={large?'ocean-map large':'ocean-map'} viewBox="-137 -137 274 274" role="img" aria-label="Ocean chart: six portfolio islands, your position, and discoveries">
+  <defs><radialGradient id={large?'maplarge':'mapsmall'}><stop stopColor="#24545e"/><stop offset="1" stopColor="#142e3c"/></radialGradient></defs>
+  <circle r="130" fill={`url(#${large?'maplarge':'mapsmall'})`} stroke="#bed1bb" strokeOpacity=".2"/>
+  {[40,80,120].map(n=><circle key={n} r={n} fill="none" stroke="#c2dbd1" strokeOpacity=".09" strokeDasharray="2 5"/>)}
+  <path d="M-128 0H128M0-128V128" stroke="#c2dbd1" strokeOpacity=".12"/>
+  <text y="-114" textAnchor="middle" className="map-north">N</text>
+  {large&&pearlPoints.map((p,i)=>!state.pearls.includes(i)&&<circle key={i} cx={p[0]} cy={p[1]} r="1.4" fill="#d5eaa9"/>)}
+  {state.race>=0&&<><polyline points={racePoints.map(p=>p.join(',')).join(' ')} fill="none" stroke="#efc48c" strokeWidth=".6" strokeDasharray="2 2"/>{racePoints.map((p,i)=>i>=state.race&&<circle key={i} cx={p[0]} cy={p[1]} r={state.race===i?4:2} fill={state.race===i?'#f9cc85':'#987f61'}/>)}</>}
+  {places.map((p,i)=><g key={p.id} className={travel?'map-location':''} role={travel?'button':undefined} tabIndex={travel?0:undefined} aria-label={travel?`Sail to ${p.name}`:undefined} onClick={()=>travel?.(p.id)} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();travel?.(p.id);}}}>
+   <circle cx={p.x} cy={p.z} r={p.radius+4} fill={p.color} opacity=".10"/>
+   <path d={`M${p.x-p.radius} ${p.z}q2 ${-p.radius} ${p.radius} ${-p.radius*.85}q${p.radius} -3 ${p.radius} ${p.radius*.85}q-2 ${p.radius} ${-p.radius} ${p.radius*.85}q${-p.radius} 0 ${-p.radius} ${-p.radius*.85}`} fill={state.visited.includes(p.id)?'#6d9b79':'#496e64'} stroke={p.color} strokeWidth=".6"/>
+   {large&&<><text x={p.x} y={p.z+2} className="map-number" textAnchor="middle">{placeIcons[i]}</text><text x={p.x} y={p.z+p.radius+10} className="map-label" textAnchor="middle">{p.name}</text></>}
+  </g>)}
+  <circle cx={state.x} cy={state.z} r="7" fill="#ecdbc2" opacity=".12"/>
+  <g transform={`translate(${state.x},${state.z}) rotate(${-state.heading*180/Math.PI})`}><path d="M0-5L3.5 4 0 2-3.5 4Z" fill="#f9e5c8" stroke="#102b34" strokeWidth=".7"/></g>
+ </svg>;
 }
-
-function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 24);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <div className="site-shell">
-      <header
-        className={isScrolled ? 'site-header is-scrolled' : 'site-header'}
-      >
-        <a className="wordmark" href="#top" aria-label="Back to top">
-          <span>Yixu</span>
-          <span>Huang</span>
-        </a>
-
-        <button
-          className="menu-button"
-          type="button"
-          aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-
-        <nav className={menuOpen ? 'site-nav is-open' : 'site-nav'}>
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-      </header>
-
-      <main id="top">
-        <section className="hero-section" id="about">
-          <div className="hero-copy">
-            <p className="hero-kicker">Hi there!</p>
-            <h1>
-              I&apos;m <span>Yixu Huang</span>
-            </h1>
-            <p className="hero-contact">
-              Contact: yixuhuang23 <span>[at]</span> m.fudan.edu.cn
-            </p>
-
-            <div className="hero-bio">
-              <p>
-                I am an undergraduate student at{' '}
-                <strong className="blue-underline">Fudan University</strong>,
-                studying Data Science and Big Data Technology. My research
-                interests span{' '}
-                <span className="blue-underline">large language models</span>,{' '}
-                <span className="blue-underline">multimodal intelligence</span>,
-                <span className="blue-underline">agentic systems</span>, and{' '}
-                <span className="blue-underline">game AI</span>.
-              </p>
-              <p>
-                I am currently working with{' '}
-                <a href="https://jiaqima.github.io/" target="_blank" rel="noreferrer">
-                  Prof. Jiaqi W. Ma
-                </a>{' '}
-                at UIUC on{' '}
-                <span className="blue-underline">
-                  continual learning methods
-                </span>{' '}
-                that help agents adapt over time and develop capabilities{' '}
-                <span className="blue-underline">
-                  beyond those of their underlying foundation models
-                </span>
-                .
-              </p>
-              <p>
-                Beyond research, I build games, take photos, hike, read, and
-                keep looking for new places to explore.
-              </p>
-            </div>
-
-            <div className="hero-actions" aria-label="Profile links">
-              <a className="button button-primary" href="mailto:yixuhuang23@m.fudan.edu.cn">
-                <Mail size={17} />
-                Email
-              </a>
-              <a
-                className="button"
-                href="https://scholar.google.com/citations?user=ZBJHQB0AAAAJ&hl=en&oi=sra"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <GraduationCap size={17} />
-                Scholar
-              </a>
-              <a
-                className="button"
-                href="https://github.com/RunRiotComeOn"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Github size={19} />
-                GitHub
-              </a>
-              <a
-                className="button"
-                href="https://yxsophie.itch.io"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Gamepad2 size={19} />
-                Itch.io
-              </a>
-            </div>
-          </div>
-
-          <div className="hero-portrait-wrap">
-            <div className="portrait-accent" aria-hidden="true" />
-            <img
-              className="hero-portrait"
-              src={`${import.meta.env.BASE_URL}hero-portrait.jpg`}
-              alt="Yixu Huang"
-            />
-          </div>
-        </section>
-
-        <section className="principles-section" id="principles">
-          <p className="principles-label">RESEARCH IDEAL</p>
-          <blockquote>
-            <span>The simpler, the better.</span>
-            Make the problem simple, until it can&apos;t be simpler.
-          </blockquote>
-          <p className="principles-note">
-            Clarity is not a shortcut. It is the result of understanding a
-            problem well enough to remove everything that does not matter.
-          </p>
-        </section>
-
-        <section className="content-section" id="research">
-          <SectionHeading eyebrow="01 / RESEARCH">
-            Research experience
-          </SectionHeading>
-
-          <div className="research-list">
-            {researchExperiences.map((experience) => (
-              <article className="research-row" key={experience.institution}>
-                <time>{experience.year}</time>
-                <div className="research-logo">
-                  <img
-                    src={experience.logo}
-                    alt={`${experience.institution} logo`}
-                  />
-                </div>
-                <div>
-                  <p className="row-label">{experience.institution}</p>
-                  <h3>{experience.lab}</h3>
-                  <p>{experience.details}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="content-section publications-section" id="publications">
-          <SectionHeading eyebrow="02 / SELECTED WORK">
-            Publications
-          </SectionHeading>
-
-          <div className="publication-list">
-            {publications.map((publication, index) => (
-              <article className="publication-row" key={publication.title}>
-                <div className="publication-index">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
-                <a
-                  className="publication-image"
-                  href={publication.links[0].href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Open ${publication.title}`}
-                >
-                  <img
-                    src={publication.image}
-                    alt={`${publication.title} overview`}
-                  />
-                </a>
-                <div className="publication-copy">
-                  <div className="publication-meta">
-                    <span>{publication.venue}</span>
-                    <span>{publication.type}</span>
-                  </div>
-                  <h3>{publication.title}</h3>
-                  <p className="authors">{publication.authors}</p>
-                  <p className="publication-description">
-                    {publication.description}
-                  </p>
-                  <div className="text-links">
-                    {publication.links.map((link) => (
-                      <a
-                        key={link.label}
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {link.label}
-                        <ArrowUpRight size={14} />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="content-section" id="experience">
-          <SectionHeading eyebrow="03 / BACKGROUND">
-            Education & honors
-          </SectionHeading>
-
-          <div className="split-section">
-            <div>
-              <h3 className="subsection-title">
-                <BookOpen size={20} />
-                Education
-              </h3>
-              <div className="timeline">
-                {education.map((item) => (
-                  <article key={item.school}>
-                    <time>{item.period}</time>
-                    <h4>{item.school}</h4>
-                    <p>{item.degree}</p>
-                    <span>
-                      <MapPin size={13} />
-                      {item.place}
-                    </span>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="subsection-title">
-                <Trophy size={20} />
-                Honors
-              </h3>
-              <div className="honors-list">
-                {awards.map(([year, title, detail]) => (
-                  <article key={`${year}-${title}`}>
-                    <time>{year}</time>
-                    <div>
-                      <h4>{title}</h4>
-                      <p>{detail}</p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="life-section" id="life">
-          <div className="life-heading">
-            <SectionHeading eyebrow="04 / OFF THE CLOCK">
-              Personal life
-            </SectionHeading>
-            <div className="life-notes">
-              <p>
-                Beyond research, I enjoy making, exploring, and staying curious
-                through music, travel, and creative projects.
-              </p>
-            </div>
-          </div>
-
-          <div className="life-grid">
-            {lifeImages.map((image) => (
-              <figure key={image.label}>
-                <img src={image.src} alt={image.alt} />
-                <figcaption>{image.label}</figcaption>
-              </figure>
-            ))}
-          </div>
-
-          <div className="interest-links">
-            <div className="interest-item">
-              <Music2 size={20} />
-              <span>
-                I have completed Grade 10 in China&apos;s amateur piano grading
-                system and reached Performance Grade Level I. Beyond the piano,
-                I also play the zhongruan, ukulele, and handpan.
-              </span>
-            </div>
-
-            <div className="interest-item">
-              <Plane size={20} />
-              <span>
-                I have visited nearly 20 countries—and I am always ready to
-                explore one more.
-              </span>
-            </div>
-
-            <div className="interest-item">
-              <Camera size={20} />
-              <span>
-                I have long wanted to publish a photobook of my own and give
-                rock climbing a try.
-              </span>
-            </div>
-
-            <a
-              className="interest-item interest-link"
-              href="https://yxsophie.itch.io/one-button-boss"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Gamepad2 size={20} />
-              <span>
-                I build games for fun—play <strong>One Button Boss</strong>.
-              </span>
-              <ExternalLink size={17} />
-            </a>
-
-            <a
-              className="interest-item interest-link"
-              href="https://runriotcomeon.github.io/Global_Gemstone_Map/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Gem size={20} />
-              <span>
-                I&apos;m also fascinated by gemstones—explore the{' '}
-                <strong>Global Gemstone Map</strong>.
-              </span>
-              <ExternalLink size={17} />
-            </a>
-
-            <div className="interest-item">
-              <Biohazard size={20} />
-              <span>
-                I&apos;m a huge <strong>Resident Evil</strong> fan—if you are too,
-                I&apos;d love to chat about the series, its lore, and survival horror.
-              </span>
-            </div>
-          </div>
-        </section>
-
-        <section className="contact-section" id="contact">
-          <p className="contact-eyebrow">LET&apos;S TALK</p>
-          <h2>Interested in ideas that are simple, useful, and built to last.</h2>
-          <p>
-            I am always happy to discuss research collaborations, new projects,
-            or opportunities in AI and machine learning.
-          </p>
-          <a href="mailto:yixuhuang23@m.fudan.edu.cn">
-            yixuhuang23@m.fudan.edu.cn
-            <ArrowUpRight size={19} />
-          </a>
-        </section>
-      </main>
-
-      <footer>
-        <span>© {new Date().getFullYear()} Yixu Huang</span>
-        <span>
-          <CalendarDays size={14} />
-          Last updated July 2026
-        </span>
-        <a href="#top">Back to top ↑</a>
-      </footer>
-    </div>
-  );
+export default function App(){
+ const host=useRef<HTMLDivElement>(null),world=useRef<OceanWorld|null>(null);const [state,setState]=useState<WorldState>(initialState),[panel,setPanel]=useState<Panel>(null),[toast,setToast]=useState(''),[photo,setPhoto]=useState(false),[intro,setIntro]=useState(true);
+ const [options,setOptions]=useState<WorldOptions>({paused:false,night:false,low:typeof window!=='undefined'&&window.innerWidth<700,reduced:typeof window!=='undefined'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,sound:false});
+ const joy=useRef<HTMLDivElement>(null),[stick,setStick]=useState({x:0,y:0}),touchVector=useRef({x:0,y:0,boost:false});const [resetConfirm,setResetConfirm]=useState(false);
+ useEffect(()=>{let cancelled=false;import('./ocean/world').then(({OceanWorld})=>{if(cancelled||!host.current)return;try{world.current=new OceanWorld(host.current,setState,setToast,id=>setPanel(id));world.current.setOptions(options);}catch{setState(s=>({...s,error:'This browser could not start the 3D ocean. You can still explore every part of the portfolio in the field guide.'}));}});return()=>{cancelled=true;world.current?.dispose();world.current=null;};},[]);
+ useEffect(()=>{world.current?.setOptions({...options,paused:panel!==null});},[options,panel]);
+ useEffect(()=>{if(!toast)return;const id=setTimeout(()=>setToast(''),4600);return()=>clearTimeout(id);},[toast]);
+ useEffect(()=>{if(state.speed>.8)setIntro(false);},[state.speed]);
+ useEffect(()=>{const f=(e:KeyboardEvent)=>{if((e.target as HTMLElement).closest('input,textarea,[role="dialog"]'))return;if(e.key==='Escape'){setPhoto(false);setPanel(null);}if(e.key.toLowerCase()==='m'){setPanel(p=>p==='map'?null:'map');}if(e.key.toLowerCase()==='j')setPanel(p=>p==='journal'?null:'journal');if(e.key.toLowerCase()==='p')setPhoto(p=>!p);};window.addEventListener('keydown',f);return()=>window.removeEventListener('keydown',f);},[]);
+ const travel=(p:PlaceId)=>{world.current?.travel(p);setPanel(null);setIntro(false);};
+ const changeTouch=(e:React.PointerEvent)=>{if(!joy.current)return;const r=joy.current.getBoundingClientRect(),dx=(e.clientX-r.left-r.width/2)/40,dy=(e.clientY-r.top-r.height/2)/40,d=Math.max(1,Math.hypot(dx,dy));touchVector.current.x=dx/d;touchVector.current.y=dy/d;setStick({x:dx/d*30,y:dy/d*30});world.current?.setTouch(dx/d,dy/d,touchVector.current.boost);};
+ const resetTouch=()=>{touchVector.current.x=0;touchVector.current.y=0;setStick({x:0,y:0});world.current?.setTouch(0,0,false);};
+ const near=places.find(p=>p.id===state.near);const selected=places.find(p=>p.id===panel);
+ const title=selected?.name??({map:'Your ocean atlas',journal:'The field guide',settings:'Make yourself at home',help:'A small guide to a big ocean'}[panel as 'map'|'journal'|'settings'|'help']||'');
+ return <main className={`ocean-app ${photo?'photo-mode':''}`}>
+  <div className="world" ref={host}/><div className="screen-vignette"/>
+  {!state.ready&&!state.error&&<div className="loading-card" role="status"><Waves size={26}/><span>Finding the current…</span><i/></div>}
+  {state.error&&<div className="error-card"><Waves/><h2>The field guide is still open.</h2><p>{state.error}</p><button className="primary" onClick={()=>setPanel('journal')}>Read the portfolio <BookOpen size={18}/></button><button onClick={()=>location.reload()}>Reload ocean</button></div>}
+  <header className="hud topbar">
+   <button className="identity" onClick={()=>setPanel('home')} aria-label="Meet Yixu Huang"><span className="identity-mark"><Waves size={26}/></span><span><strong>Yixu’s ocean<span className="period">.</span></strong><small>A PLAYABLE PORTFOLIO</small></span></button>
+   <nav aria-label="Ocean navigation"><a className="nav-button home-return" href={homeUrl} aria-label="Back to homepage"><ArrowUpRight size={17}/><span>Home</span></a><button className="nav-button" onClick={()=>setPanel('journal')}><BookOpen size={17}/><span>Field guide</span><kbd>J</kbd></button><button className="nav-button" onClick={()=>setPanel('map')}><MapIcon size={17}/><span>Atlas</span><kbd>M</kbd></button><span className="nav-divider"/><button className="icon-button" aria-label={options.sound?'Mute ocean sound':'Enable ocean sound'} aria-pressed={options.sound} onClick={()=>setOptions(o=>({...o,sound:!o.sound}))}>{options.sound?<Volume2 size={18}/>:<VolumeX size={18}/>}</button><button className="icon-button" aria-label="Ocean settings" onClick={()=>setPanel('settings')}><Settings2 size={18}/></button></nav>
+  </header>
+  <div className="hud place-caption"><span className="tiny-dot"/> {near?near.name:'The open sea'} <span className="caption-divider">/</span><span>{options.night?'MOONLIT WATERS':'MORNING TIDE'}</span></div>
+  <aside className="hud expedition">
+   <div className="eyebrow"><Compass size={15}/> A LITTLE EXPEDITION</div>
+   <h2>{state.visited.length===6?'Every shore, a story.':'Follow your curiosity.'}</h2>
+   <button className="quest-line" onClick={()=>setPanel('map')}><span className="quest-icon"><Flag size={16}/></span><span>Discover the archipelago<small>Six islands. A few things about me.</small></span><b>{state.visited.length}<em>/6</em></b></button>
+   <button className="quest-line" onClick={()=>world.current?.command('sonar')}><span className="quest-icon pearl-icon"><Sparkles size={17}/></span><span>Collect the ocean’s echoes<small>Listen closely. Press Q for sonar.</small></span><b>{state.pearls.length}<em>/18</em></b></button>
+   <button className={`race-button ${state.race>=0?'racing':''}`} onClick={()=>world.current?.command('race')}><Flag size={15}/><span>{state.race>=0?`Tide run · ${state.race}/10 rings`:'Try the tide run'}</span><span>{state.race>=0?`${state.raceTime.toFixed(1)}s`:state.best?`${state.best.toFixed(1)}s best`:'R'}<ChevronRight size={14}/></span></button>
+  </aside>
+  {intro&&state.ready&&<div className="hud welcome-note"><span>HELLO, WANDERER</span><h1>A curious mind.<br/>An ocean to explore.</h1><p>I’m Yixu. I study how AI learns to<br className="desktop-break"/> reason, adapt, and play. Swim with me.</p><button onClick={()=>{setIntro(false);world.current?.command('sonar');host.current?.querySelector('canvas')?.focus();}}>Catch a current <MoveUpRight size={17}/></button></div>}
+  {!intro&&near&&<button className="hud interact-prompt" onClick={()=>setPanel(near.id)}><span className="key-large">E</span><span><small>YOU’VE REACHED {near.zh}</small><strong>{near.subtitle}</strong></span><ArrowUpRight size={21}/></button>}
+  <div className="hud status-toast" role="status" aria-live="polite">{toast&&<span><Sparkles size={15}/>{toast}</span>}</div>
+  <aside className="hud mini-chart"><button className="map-toggle" onClick={()=>setPanel('map')} aria-label="Open ocean atlas"><MapView state={state}/><span className="map-caption"><Compass size={13}/> THE ARCHIPELAGO <ArrowUpRight size={13}/></span></button><div className="coordinates">{Math.abs(state.x).toFixed(0)}° {state.x<0?'W':'E'} &nbsp; {Math.abs(state.z).toFixed(0)}° {state.z<0?'N':'S'} <span>·</span> {state.speed.toFixed(0)} kn</div></aside>
+  <footer className="hud bottom-bar"><button className="quiet help-link" onClick={()=>setPanel('help')}>How to wander <span>?</span></button><div className="keyboard-controls"><span><kbd>W A S D</kbd> Swim</span><span><kbd>SHIFT</kbd> Glide</span><span><kbd>SPACE</kbd> Leap</span><span><kbd>Q</kbd> Sonar</span><span className="mouse-help">Click to swim · Drag to look</span></div><button className="icon-button" aria-label="Enter photo mode" onClick={()=>setPhoto(true)}><Camera size={18}/></button></footer>
+  <div className="hud energy"><span>GLIDE</span><div><i style={{width:`${state.energy}%`}}/></div></div>
+  <div className="hud touch-controls"><div ref={joy} className="joystick" role="group" aria-label="Touch joystick: drag to swim" onPointerDown={e=>{e.currentTarget.setPointerCapture(e.pointerId);changeTouch(e);setIntro(false);}} onPointerMove={e=>{if(e.buttons)changeTouch(e);}} onPointerUp={resetTouch} onPointerCancel={resetTouch}><span style={{transform:`translate(${stick.x}px,${stick.y}px)`}}><Navigation size={22}/></span></div><div className="touch-actions"><button aria-label="Sonar" onClick={()=>world.current?.command('sonar')}><Sparkles size={22}/></button><button aria-label="Leap" onClick={()=>world.current?.command('jump')}><ArrowUp size={22}/></button><button aria-label="Hold to glide faster" onPointerDown={e=>{e.currentTarget.setPointerCapture(e.pointerId);touchVector.current.boost=true;world.current?.setTouch(touchVector.current.x,touchVector.current.y,true);}} onPointerUp={()=>{touchVector.current.boost=false;world.current?.setTouch(touchVector.current.x,touchVector.current.y,false);}} onPointerCancel={()=>{touchVector.current.boost=false;world.current?.setTouch(0,0,false);}}>Glide</button></div></div>
+  {photo&&<button className="photo-exit" onClick={()=>setPhoto(false)}><X size={16}/> Exit photo mode <kbd>P</kbd></button>}
+  <Dialog open={panel!==null} onOpenChange={o=>{if(!o){setPanel(null);setResetConfirm(false);}}}><DialogContent className={`ocean-dialog ${panel==='map'?'atlas-dialog':''}`} onCloseAutoFocus={e=>{e.preventDefault();host.current?.querySelector('canvas')?.focus({preventScroll:true});}}>
+   <div className="dialog-kicker">YIXU’S OCEAN <span>/</span> {selected?selected.zh:panel==='map'?'CHART YOUR COURSE':'NOTES FROM THE SHORE'}</div><DialogTitle className="dialog-title">{title}</DialogTitle><DialogDescription className="dialog-description">{selected?.subtitle??(panel==='map'?'Choose an island to sail there. All shores are open to you.':panel==='journal'?'Research, small adventures, and everything in between.':'Take the ocean at your own pace.')}</DialogDescription>
+   <div className="dialog-body">
+    {panel==='home'&&<><div className="profile-layout"><img className="portrait" src={asset('hero-portrait.jpg')} alt="Yixu Huang"/><div><span className="eyebrow">AI RESEARCHER · EXPLORER</span><h3>Hello, I’m Yixu Huang.</h3><p>I’m an undergraduate at Fudan University, studying artificial intelligence and machine learning. I’m fascinated by how AI systems perceive, reason, and interact with the world.</p><p>My research spans large language models, multimodal intelligence, and agentic systems. I’m currently working with <Link href="https://jiaqima.github.io/">Prof. Jiaqi W. Ma at UIUC</Link> on continual learning for agents.</p></div></div><blockquote>How can an agent keep learning from its own experience?</blockquote><p>Beyond research, I enjoy hiking, photography, reading, and exploring new cultures. I’ve been to nearly 20 countries, and there’s always another shore to discover.</p><div className="link-row"><button className="primary" onClick={()=>setPanel('research')}>Explore my research <ArrowUpRight size={17}/></button><button onClick={()=>setPanel('contact')}>Say hello <Mail size={17}/></button></div></>}
+    {panel==='research'&&<><p className="lead">Learning doesn’t have to end at pretraining.</p><p>I study continual learning methods that help agentic systems adapt over time while preserving robust reasoning, memory, and decision-making.</p><div className="topic-tags"><span>Language agents</span><span>Continual learning</span><span>Multimodal reasoning</span><span>Game AI</span></div>{labs.map(l=><article className="lab-card" key={l.short}><img src={asset(l.logo)} alt={`${l.short} logo`}/><div><span className="eyebrow">{l.year} · {l.lab}</span><h3>{l.name}</h3><p>{l.detail}</p><div className="link-row">{l.people.map(p=><Link href={p[1]} key={p[0]}>{p[0]}</Link>)}</div></div></article>)}<button className="primary" onClick={()=>setPanel('papers')}>Read the papers <BookOpen size={17}/></button></>}
+    {panel==='papers'&&<>{papers.map((p,i)=><article className="paper" key={p.title}><div className="paper-meta"><span>{String(i+1).padStart(2,'0')} / {p.venue}</span><b>{p.badge}</b></div><h3>{p.title}</h3><p className="authors">{p.authors}</p><img src={asset(p.image)} alt={`${p.title} research overview`} loading="lazy"/><p>{p.summary}</p><div className="link-row">{p.links.map(l=><Link href={l[1]} key={l[0]}>{l[0]}</Link>)}</div></article>)}</>}
+    {panel==='journey'&&<><span className="eyebrow">THE JOURNEY SO FAR</span><div className="timeline"><article><time>2023 — PRESENT</time><h3>Fudan University</h3><p>B.S. in Data Science and Big Data Technology<br/>School of Data Science · Shanghai, China</p></article><article><time>FALL 2025</time><h3>University of California, Davis</h3><p>Exchange Student in Computer Science<br/>College of Engineering · Davis, CA, USA</p></article></div><h3 className="section-heading">Little milestones</h3><div className="award-grid">{awards.map(a=><article key={a[1]}><span>{a[0]} <Sparkles size={16}/></span><h4>{a[1]}</h4><p>{a[2]}</p></article>)}</div></>}
+    {panel==='play'&&<><div className="game-feature"><span className="eyebrow">A GAME I MADE</span><h3>One Button Boss</h3><p>A pixel-art bullet hell, built for fun. One button, plenty of ways to get into trouble.</p><Link href="https://yxsophie.itch.io/one-button-boss">Play on itch.io</Link></div><div className="life-grid">{[['life-hiking.jpg','Hiking','Exploring nature trails'],['life-photography.jpg','Photography','Capturing moments'],['life-travel.jpg','Travel','Discovering new places'],['life-reading.jpg','Reading','Learning and relaxing']].map(p=><figure key={p[0]}><img src={asset(p[0])} alt={p[1]} loading="lazy"/><figcaption><strong>{p[1]}</strong><span>{p[2]}</span></figcaption></figure>)}</div><p>“I believe that diverse experiences fuel creativity and innovation. I’ve been to nearly 20 countries, and I’m always passionate to explore more!”</p><div className="topic-tags">{['Nature','Art','Travel','Literature','Music'].map(t=><span key={t}>{t}</span>)}</div><h3 className="section-heading">While you’re in the ocean</h3><p>Find 18 echo pearls, visit all six islands, or take on the ten-ring tide run. Your discoveries and best time stay in this browser.</p><button className="primary" onClick={()=>{setPanel(null);setTimeout(()=>world.current?.command('race'),0);}}>Start a tide run <Flag size={17}/></button></>}
+    {panel==='contact'&&<><p className="lead">Send a little signal across the sea.</p><p>I’m always interested in research collaborations, potential projects, and opportunities in AI and machine learning.</p><div className="social-grid">{socials.map(l=><Link href={l[1]} key={l[0]}>{l[0]}</Link>)}</div><Suspense fallback={<p>Opening the postcard…</p>}><ContactForm/></Suspense></>}
+    {panel==='map'&&<div className="atlas-layout"><MapView large state={state} travel={travel}/><div className="atlas-list">{places.map((p,i)=><button key={p.id} onClick={()=>travel(p.id)}><span style={{color:p.color}}>{placeIcons[i]}</span><span><strong>{p.name}</strong><small>{p.subtitle}</small></span>{state.visited.includes(p.id)?<Check size={16}/>:<ArrowUpRight size={16}/>}</button>)}<p className="fineprint">Navigation is always free. You don’t need to unlock an island to read its story.</p></div></div>}
+    {panel==='journal'&&<><div className="journal-stats"><div><strong>{state.visited.length}<small>/6</small></strong><span>ISLANDS DISCOVERED</span></div><div><strong>{state.pearls.length}<small>/18</small></strong><span>ECHOES COLLECTED</span></div><div><strong>{state.best?`${state.best.toFixed(1)}s`:'—'}</strong><span>PERSONAL BEST</span></div></div><div className="journal-grid">{places.map((p,i)=><button key={p.id} onClick={()=>setPanel(p.id)}><span className="journal-number" style={{color:p.color}}>{placeIcons[i]}</span><span className="eyebrow">{p.subtitle}</span><strong>{p.name}</strong><span className="journal-bottom">Read the story <ArrowUpRight size={18}/></span></button>)}</div><p className="fineprint">All portfolio details are available here, with or without playing. Progress is saved on this device.</p></>}
+    {panel==='settings'&&<><div className="settings-list">{([{key:'sound',label:'Ocean sound',description:'A quiet ambient tone and gentle discovery sounds.'},{key:'night',label:'Moonlit waters',description:'Switch off for a brighter morning tide.'},{key:'low',label:'Gentle on your device',description:'Lower resolution and fewer lighting effects.'},{key:'reduced',label:'Quieter motion',description:'Still foliage and water. Movement stays in your control.'}] as const).map(s=><div key={s.key}><label htmlFor={s.key}><strong>{s.label}</strong><span>{s.description}</span></label><Switch id={s.key} checked={options[s.key]} onCheckedChange={v=>setOptions(o=>({...o,[s.key]:v}))}/></div>)}</div><button onClick={()=>travel('home')}><RotateCcw size={16}/> Return to Moonrise Cove</button><div className="reset-block">{resetConfirm?<><p>Clear collected echoes, visited islands, and your best time on this device?</p><button className="danger" onClick={()=>{world.current?.reset();setResetConfirm(false);setToast('A fresh voyage awaits.');}}>Yes, start a new voyage</button><button onClick={()=>setResetConfirm(false)}>Keep my progress</button></>:<button className="quiet" onClick={()=>setResetConfirm(true)}>Start a fresh voyage</button>}</div><details className="credits"><summary>Made with a little help · credits</summary><p>Orca by Poly by Google, via <Link href="https://poly.pizza/m/5p9B6IebY-A">Poly Pizza</Link>, licensed under <Link href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</Link>. Rescaled and recolored for this ocean.</p><p>Inspired by the playable world of <Link href="https://bruno-simon.com/">Bruno Simon</Link> and the moonlit, painterly atmosphere of <Link href="https://longtailwriter.com/">长尾森林</Link>. Original world and interface built for Yixu; reference artwork is not reused.</p><p>Built with Three.js, React, and Lucide. Fictional island names and game geography; portfolio details from Yixu’s existing homepage.</p></details></>}
+    {panel==='help'&&<><div className="controls-guide">{[['W A S D / ↑ ↓ ← →','Swim in the direction of the screen'],['CLICK / TAP','Swim toward a point in the water'],['DRAG / RIGHT DRAG','Orbit the camera'],['SCROLL','Move the camera closer or farther'],['SHIFT','Glide faster while your energy lasts'],['SPACE','Leap above the surface'],['Q','Send a sonar pulse to find nearby echoes'],['E','Read the story at a nearby island dock'],['R','Start or stop the ten-ring tide run'],['M / J','Open the atlas or field guide'],['P','Hide the interface for a quiet view']].map(c=><div key={c[0]}><kbd>{c[0]}</kbd><span>{c[1]}</span></div>)}</div><p>On your phone, use the left joystick to swim and the right buttons to glide, leap, and send sonar. Use the atlas to travel instantly if you lose your bearings.</p><p>Collect the pale green echoes by swimming close. In the tide run, follow the golden rings in order; the next ring is highlighted on your chart. There’s no deadline for exploring.</p></>}
+   </div>
+   {selected&&<div className="dialog-footer"><span>{selected.zh} · ISLAND {placeIcons[places.findIndex(p=>p.id===selected.id)]}</span><button onClick={()=>travel(selected.id)}>Sail here <Navigation size={15}/></button></div>}
+  </DialogContent></Dialog>
+ </main>;
 }
-
-export default App;

@@ -2,11 +2,12 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Waves, Map as MapIcon, BookOpen, Volume2, VolumeX, Compass, ArrowUpRight, Navigation, Sparkles, Flag, Camera, Settings2, RotateCcw, Check, ChevronRight, X, Mail, ArrowUp, MoveUpRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from './components/ui/dialog';
 import { Switch } from './components/ui/switch';
-import { places, pearlPoints, racePoints, papers, labs, awards, socials, asset } from './ocean/data';
+import { places, pearlPoints, racePoints, papers, labs, awards, socials, asset, homeUrl } from './ocean/data';
 import type { PlaceId } from './ocean/data';
 import type { OceanWorld } from './ocean/world';
 import type { WorldState, WorldOptions } from './ocean/state';
 import { initialState } from './ocean/state';
+import './index.css';
 import './App.css';
 const ContactForm = lazy(()=>import('./ocean/ContactForm'));
 type Panel = PlaceId|'map'|'journal'|'settings'|'help'|null;
@@ -32,7 +33,7 @@ function MapView({state,large=false,travel}:{state:WorldState;large?:boolean;tra
 }
 export default function App(){
  const host=useRef<HTMLDivElement>(null),world=useRef<OceanWorld|null>(null);const [state,setState]=useState<WorldState>(initialState),[panel,setPanel]=useState<Panel>(null),[toast,setToast]=useState(''),[photo,setPhoto]=useState(false),[intro,setIntro]=useState(true);
- const [options,setOptions]=useState<WorldOptions>({paused:false,night:true,low:typeof window!=='undefined'&&window.innerWidth<700,reduced:typeof window!=='undefined'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,sound:false});
+ const [options,setOptions]=useState<WorldOptions>({paused:false,night:false,low:typeof window!=='undefined'&&window.innerWidth<700,reduced:typeof window!=='undefined'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,sound:false});
  const joy=useRef<HTMLDivElement>(null),[stick,setStick]=useState({x:0,y:0}),touchVector=useRef({x:0,y:0,boost:false});const [resetConfirm,setResetConfirm]=useState(false);
  useEffect(()=>{let cancelled=false;import('./ocean/world').then(({OceanWorld})=>{if(cancelled||!host.current)return;try{world.current=new OceanWorld(host.current,setState,setToast,id=>setPanel(id));world.current.setOptions(options);}catch{setState(s=>({...s,error:'This browser could not start the 3D ocean. You can still explore every part of the portfolio in the field guide.'}));}});return()=>{cancelled=true;world.current?.dispose();world.current=null;};},[]);
  useEffect(()=>{world.current?.setOptions({...options,paused:panel!==null});},[options,panel]);
@@ -50,7 +51,7 @@ export default function App(){
   {state.error&&<div className="error-card"><Waves/><h2>The field guide is still open.</h2><p>{state.error}</p><button className="primary" onClick={()=>setPanel('journal')}>Read the portfolio <BookOpen size={18}/></button><button onClick={()=>location.reload()}>Reload ocean</button></div>}
   <header className="hud topbar">
    <button className="identity" onClick={()=>setPanel('home')} aria-label="Meet Yixu Huang"><span className="identity-mark"><Waves size={26}/></span><span><strong>Yixu’s ocean<span className="period">.</span></strong><small>A PLAYABLE PORTFOLIO</small></span></button>
-   <nav aria-label="Ocean navigation"><button className="nav-button" onClick={()=>setPanel('journal')}><BookOpen size={17}/><span>Field guide</span><kbd>J</kbd></button><button className="nav-button" onClick={()=>setPanel('map')}><MapIcon size={17}/><span>Atlas</span><kbd>M</kbd></button><span className="nav-divider"/><button className="icon-button" aria-label={options.sound?'Mute ocean sound':'Enable ocean sound'} aria-pressed={options.sound} onClick={()=>setOptions(o=>({...o,sound:!o.sound}))}>{options.sound?<Volume2 size={18}/>:<VolumeX size={18}/>}</button><button className="icon-button" aria-label="Ocean settings" onClick={()=>setPanel('settings')}><Settings2 size={18}/></button></nav>
+   <nav aria-label="Ocean navigation"><a className="nav-button home-return" href={homeUrl} aria-label="Back to homepage"><ArrowUpRight size={17}/><span>Home</span></a><button className="nav-button" onClick={()=>setPanel('journal')}><BookOpen size={17}/><span>Field guide</span><kbd>J</kbd></button><button className="nav-button" onClick={()=>setPanel('map')}><MapIcon size={17}/><span>Atlas</span><kbd>M</kbd></button><span className="nav-divider"/><button className="icon-button" aria-label={options.sound?'Mute ocean sound':'Enable ocean sound'} aria-pressed={options.sound} onClick={()=>setOptions(o=>({...o,sound:!o.sound}))}>{options.sound?<Volume2 size={18}/>:<VolumeX size={18}/>}</button><button className="icon-button" aria-label="Ocean settings" onClick={()=>setPanel('settings')}><Settings2 size={18}/></button></nav>
   </header>
   <div className="hud place-caption"><span className="tiny-dot"/> {near?near.name:'The open sea'} <span className="caption-divider">/</span><span>{options.night?'MOONLIT WATERS':'MORNING TIDE'}</span></div>
   <aside className="hud expedition">

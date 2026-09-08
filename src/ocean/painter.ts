@@ -18,5 +18,5 @@ export function createPainterPass(){return new ShaderPass({
  float paper=grain(floor(vUv*resolution*.8));float dry=sin(vUv.y*resolution.y*.8+sin(vUv.x*resolution.x*.11)*2.);
  color+=(paper-.5)*.052+dry*.006;
  color=mix(color,color*vec3(.89,.98,1.07),.23*(1.-smoothstep(.2,.6,lum)));
- float vignette=1.-.18*pow(length((vUv-.5)*1.3),2.);gl_FragColor=vec4(color*vignette,1.);
+ float vignette=1.-.04*pow(length((vUv-.5)*1.3),2.);gl_FragColor=vec4(color*vignette,1.);
  }`});}

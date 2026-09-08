@@ -36,4 +36,5 @@ export const racePoints = [
 export const pearlPoints = [
  [-17,12],[-26,-6],[-28,-34],[-61,-14],[-16,-61],[18,-56],[49,-28],[66,-3],[87,39],[43,55],[19,49],[-12,73],[-30,55],[-58,22],[-80,52],[-78,-48],[66,-76],[6,97],
 ];
-export const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+export const homeUrl = new URL(/\/play-atlas(?:\/|\/index\.html)?$/.test(window.location.pathname) ? '../' : './', window.location.href).href;
+export const asset = (path: string) => new URL(path, homeUrl).href;

@@ -43,7 +43,7 @@ diffuseColor.rgb*=.84+.22*grain+.055*stroke;
  }
  terrain(parent:THREE.Object3D,r:number,index:number){
   const segments=112,rings=14,verts:number[]=[],indices:number[]=[],uvs:number[]=[],colors:number[]=[];
-  const sand=new THREE.Color('#8caa9d'),grass=new THREE.Color('#70a064'),cliff=new THREE.Color('#426580');
+  const sand=new THREE.Color('#eedca4'),grass=new THREE.Color('#8dc85d'),cliff=new THREE.Color('#6b95ac');
   for(let j=0;j<=rings;j++)for(let i=0;i<=segments;i++){
    const a=i/segments*Math.PI*2,f=j/rings,outline=.94+.055*Math.sin(a*3+index)+.035*Math.sin(a*7-index*.6);
    const rr=r*f*outline;const x=Math.sin(a)*rr,z=Math.cos(a)*rr;

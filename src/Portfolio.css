@@ -984,3 +984,44 @@ footer a {
 @media(max-width:700px){.atlas-hero-entry{padding:17px;gap:13px;margin-bottom:24px}.atlas-hero-entry strong{font-size:28px}.atlas-hero-entry small{font-size:10px;letter-spacing:.7px}.atlas-entry-icon{min-width:44px;height:48px}.atlas-hero-entry span span{font-size:13px}}
 
 @media(min-width:901px) and (max-width:1150px){.site-nav{gap:14px}.site-header{gap:20px}.site-nav .atlas-nav-entry{padding:10px}}
+
+/* Play Atlas entrance uses the same editorial ink, paper, and blue highlight language as the homepage. */
+.site-nav .atlas-nav-entry{
+  color:var(--ink); background:var(--paper); border:1px solid var(--ink); border-radius:0;
+  padding:10px 13px; box-shadow:3px 3px 0 var(--blue); font-size:11px;
+}
+.site-nav .atlas-nav-entry::after{display:none}
+.site-nav .atlas-nav-entry:hover{color:var(--ink); background:var(--blue-soft); transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink)}
+.atlas-hero-entry{
+  position:relative; overflow:visible; display:flex; align-items:center; gap:20px;
+  padding:20px 22px; margin:0 0 28px; color:var(--ink); background:var(--paper);
+  border:1px solid var(--ink); border-radius:0; box-shadow:5px 5px 0 var(--blue);
+  transition:transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+.atlas-hero-entry::before{content:''; position:absolute; z-index:-1; left:20px; right:32%; bottom:-8px; height:11px; background:#ffd875; transform:rotate(-1.5deg)}
+.atlas-hero-entry:hover{transform:translate(-2px,-2px); background:#fff; box-shadow:7px 7px 0 var(--ink)}
+.atlas-entry-icon{background:var(--blue); color:var(--ink); min-width:54px; height:54px; border-radius:50%; border:1px solid var(--ink)}
+.atlas-hero-entry small{color:var(--blue-dark); font-size:10px; letter-spacing:1.25px}
+.atlas-hero-entry strong{font-size:30px; letter-spacing:-.04em; line-height:1.25}
+.atlas-hero-entry span span{color:var(--muted); font-size:13px; line-height:1.5}
+.atlas-hero-entry:focus-visible,.atlas-nav-entry:focus-visible{outline:2px solid var(--blue-dark); outline-offset:5px}
+@media(max-width:700px){.atlas-hero-entry{padding:16px 17px;gap:13px;margin-bottom:24px}.atlas-hero-entry strong{font-size:26px}.atlas-entry-icon{min-width:44px;height:44px}.atlas-hero-entry small{font-size:9px}.atlas-hero-entry span span{font-size:12px}}
+
+/* Quiet baby-blue treatment: no border, offset shadow, or decorative underline. */
+.site-nav .atlas-nav-entry{
+  color:var(--blue-dark); background:var(--blue-soft); border:0; border-radius:8px;
+  padding:10px 13px; box-shadow:none;
+}
+.site-nav .atlas-nav-entry:hover{color:var(--blue-dark); background:var(--blue); transform:none; box-shadow:none}
+.atlas-hero-entry{
+  overflow:hidden; gap:18px; padding:20px 22px; color:var(--ink); background:var(--blue-soft);
+  border:0; border-radius:12px; box-shadow:none;
+  transition:background 180ms ease, transform 180ms ease;
+}
+.atlas-hero-entry::before{display:none}
+.atlas-hero-entry:hover{transform:translateY(-1px); background:#e2f1ff; box-shadow:none}
+.atlas-entry-icon{background:var(--blue); color:var(--blue-dark); min-width:54px; height:54px; border:0}
+.atlas-hero-entry small{color:var(--blue-dark)}
+.atlas-hero-entry span span{color:var(--muted)}
+.atlas-hero-entry:focus-visible,.atlas-nav-entry:focus-visible{outline:2px solid var(--blue); outline-offset:4px}
+@media(max-width:700px){.atlas-hero-entry{padding:16px 17px}.atlas-entry-icon{min-width:44px;height:44px}}

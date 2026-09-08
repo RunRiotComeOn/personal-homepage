@@ -41,9 +41,9 @@ diffuseColor.rgb*=.84+.22*grain+.055*stroke;
   // Weld shared vertices before calculating smooth normals.
   geo.deleteAttribute('normal');const smooth=mergeVertices(geo,.0001);geo.dispose();geo=smooth;geo.computeVertexNormals();const o=this.mesh(geo,this.paint(color),parent,x,y,z,sx,sy,sz);o.rotation.y=this.random()*6.28;return o;
  }
- terrain(parent:THREE.Object3D,r:number,index:number){
+ terrain(parent:THREE.Object3D,r:number,index:number,ice=false){
   const segments=112,rings=14,verts:number[]=[],indices:number[]=[],uvs:number[]=[],colors:number[]=[];
-  const sand=new THREE.Color('#eedca4'),grass=new THREE.Color('#8dc85d'),cliff=new THREE.Color('#6b95ac');
+  const sand=new THREE.Color(ice?'#e7f8ff':'#eedca4'),grass=new THREE.Color(ice?'#f2fbff':'#8dc85d'),cliff=new THREE.Color(ice?'#84c6e5':'#6b95ac');
   for(let j=0;j<=rings;j++)for(let i=0;i<=segments;i++){
    const a=i/segments*Math.PI*2,f=j/rings,outline=.94+.055*Math.sin(a*3+index)+.035*Math.sin(a*7-index*.6);
    const rr=r*f*outline;const x=Math.sin(a)*rr,z=Math.cos(a)*rr;
@@ -54,7 +54,7 @@ diffuseColor.rgb*=.84+.22*grain+.055*stroke;
   }
   const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));geo.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));geo.setIndex(indices);geo.computeVertexNormals();
   const source=this.paint('#e1ecd9');const mat=source.clone();mat.onBeforeCompile=source.onBeforeCompile;mat.customProgramCacheKey=source.customProgramCacheKey;mat.vertexColors=true;mat.side=THREE.DoubleSide;this.materials.add(mat);const o=this.mesh(geo,mat,parent);o.name='organic-island-terrain';
-  for(let i=0;i<29;i++){const a=i/29*6.28,outline=.94+.055*Math.sin(a*3+index)+.035*Math.sin(a*7-index*.6),rr=r*outline*.94;this.rock(parent,Math.sin(a)*rr,-.2+this.random()*.7,Math.cos(a)*rr,1+this.random()*1.3,.6+this.random()*1.3,1+this.random()*1.4,i%4===0?'#607f91':'#35526b');}
+  for(let i=0;i<29;i++){const a=i/29*6.28,outline=.94+.055*Math.sin(a*3+index)+.035*Math.sin(a*7-index*.6),rr=r*outline*.94;this.rock(parent,Math.sin(a)*rr,-.2+this.random()*.7,Math.cos(a)*rr,1+this.random()*1.3,.6+this.random()*1.3,1+this.random()*1.4,ice?'#b6e3f5':i%4===0?'#607f91':'#35526b');}
  }
  private leafMaterial:THREE.MeshStandardMaterial|null=null;
  willow(parent:THREE.Object3D,x:number,z:number,s=1){

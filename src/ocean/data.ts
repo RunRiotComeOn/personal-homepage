@@ -1,11 +1,11 @@
-export type PlaceId = 'home' | 'research' | 'papers' | 'journey' | 'play' | 'contact';
-export const places: {id: PlaceId; name: string; zh: string; subtitle: string; x: number; z: number; radius: number; color: string}[] = [
-  {id:'home',name:'Moonrise Cove',zh:'月出海湾',subtitle:'Meet Yixu',x:0,z:0,radius:13,color:'#dfbfb0'},
-  {id:'research',name:'Curiosity Station',zh:'好奇心研究站',subtitle:'Research & collaborators',x:-48,z:-39,radius:15,color:'#a9d788'},
-  {id:'papers',name:'The Idea Archive',zh:'灵感档案馆',subtitle:'Papers & discoveries',x:43,z:-52,radius:14,color:'#bcb1de'},
-  {id:'journey',name:'Memory Lighthouse',zh:'记忆灯塔',subtitle:'Education & milestones',x:66,z:29,radius:13,color:'#f5cf8b'},
-  {id:'play',name:'Wonder Reef',zh:'奇想珊瑚礁',subtitle:'Games & life beyond research',x:8,z:69,radius:12,color:'#efadbc'},
-  {id:'contact',name:'Postcard Island',zh:'明信片小岛',subtitle:'Say hello',x:-63,z:42,radius:12,color:'#91d4c7'},
+export type PlaceId = 'home' | 'research' | 'papers' | 'journey' | 'play' | 'contact' | 'arctic' | 'facts';
+export const places: {id: PlaceId; name: string; subtitle: string; x: number; z: number; radius: number; color: string}[] = [
+  {id:'home',name:'Moonrise Cove',subtitle:'Meet Yixu',x:0,z:0,radius:13,color:'#dfbfb0'},
+  {id:'research',name:'Curiosity Station',subtitle:'Research & collaborators',x:-48,z:-39,radius:15,color:'#a9d788'},
+  {id:'papers',name:'The Idea Archive',subtitle:'Papers & discoveries',x:43,z:-52,radius:14,color:'#bcb1de'},
+  {id:'journey',name:'Memory Lighthouse',subtitle:'Education & milestones',x:66,z:29,radius:13,color:'#f5cf8b'},
+  {id:'play',name:'Wonder Reef',subtitle:'Games & life beyond research',x:8,z:69,radius:12,color:'#efadbc'},
+  {id:'contact',name:'Postcard Island',subtitle:'Say hello',x:-63,z:42,radius:12,color:'#91d4c7'},
 ];
 export const papers = [
  {title:'GUI Agents for Continual Game Generation',authors:'Yixu Huang*, Bo Li*, Na Li*, Zhe Wang, et al.',venue:'EMNLP 2026 Findings',badge:'Poster',image:'play2code-overview.png',summary:'Can playing a game help an agent build a better one? PlaytestArena brings together 200 game-generation tasks across eight genres. Play2Code connects coding and playtesting through shared memory and continual feedback.',links:[['Paper','https://arxiv.org/abs/2605.28258'],['Project','https://continual-game-generation.vercel.app/']]},
@@ -38,3 +38,19 @@ export const pearlPoints = [
 ];
 export const homeUrl = new URL(/\/play-atlas(?:\/|\/index\.html)?$/.test(window.location.pathname) ? '../' : './', window.location.href).href;
 export const asset = (path: string) => new URL(path, homeUrl).href;
+
+export const beyondPlaces: typeof places = [
+ {id:'arctic',name:'Frostfang Island',subtitle:'Meet the arctic wolf',x:-35,z:-24,radius:23,color:'#c5edff'},
+ {id:'facts',name:'Little Things Island',subtitle:'Fun facts about me',x:40,z:14,radius:17,color:'#f8d1a3'},
+];
+export const allPlaces = [...places, ...beyondPlaces];
+export const funFacts = [
+ {title:'A mountain-city childhood',text:'I grew up in Chongqing, a city in China known as the "Mountain City."'},
+ {title:'Once upon a stage',text:'In middle school, I played Alice from Alice in Wonderland in an English-language stage production.'},
+ {title:'An unexpected path to AI',text:'I used to be fascinated by neuroscience. I first got into deep learning because I thought neural networks were a tool for studying the brain.'},
+ {title:'A little entrepreneurial dream',text:'Given the opportunity, I would love to be a founding member of a startup.'},
+ {title:'The people behind it all',text:'I am deeply grateful to my beloved mom and dad for raising me with love and helping me become who I am today.'},
+];
+export const factPoints = funFacts.map((_,i)=>{const a=-Math.PI*.8+i*Math.PI*.4;return [40+Math.sin(a)*24,14+Math.cos(a)*24];});
+export const oceanGate = {x:90,z:-55,rotation:-.4};
+export const returnGate = {x:0,z:78,rotation:0};

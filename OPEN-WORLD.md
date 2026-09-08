@@ -62,3 +62,13 @@ The initial low-poly art pass has been replaced, following review:
 - Original generated assets and exact prompts are in `public/art/README.md`.
 
 The browser policy restriction from revision 1 remains unresolved. Production compilation and CPU geometry/motion checks do not constitute a visual sign-off or proof of mobile frame rate. No exact parity with the reference is claimed.
+
+## Echo progression and Beyond the Veil
+
+- Play Atlas interface text is English only.
+- 6 echoes unlock the Echo compass; 12 reduce glide energy drain; all 18 activate the violet membrane in the northeast stone arch.
+- The Atlas and expedition panel can take the player to the arch approach. Physically crossing the membrane changes maps.
+- Beyond the Veil contains exactly two islands: Frostfang Island (snowfall, ice ridges, a running community wolf) and Little Things Island (five collectible personal story cards).
+- The south portal returns to the original ocean. Story cards and the wolf discovery are saved alongside the existing echo and race progress. Reset clears both maps' progress.
+- The wolf uses Quaternius's CC0 model and its original skeletal Run animation. Source and license: `public/models/arctic-wolf-LICENSE.md`.
+- `scripts/check-portal.ts` checks reward thresholds, save sanitization, portal crossings, card reachability, second-map geometry, and the wolf rig. Its Node-only texture stub avoids browser image decoding during rig checks; it does not replace runtime textures.

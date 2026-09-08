@@ -36,5 +36,10 @@ harness.travel('arctic');assert.equal(harness.state.realm,'ocean','Locked bonus 
 harness.state.pearls=Array.from({length:18},(_,i)=>i);harness.switchRealm('beyond');assert.equal(harness.original.visible,false);assert.equal(harness.beyond.root.visible,true);assert.equal(harness.water.material.uniforms.islands.value[0].x,-35);harness.travel('facts');assert.equal(harness.state.x,40);
 harness.state.facts=[0,1];harness.state.wolfSeen=true;harness.save();assert.deepEqual(readSave().facts,[0,1]);assert.equal(readSave().wolfSeen,true);
 harness.switchRealm('ocean');assert.equal(harness.original.visible,true);assert.equal(harness.beyond.root.visible,false);assert.equal(harness.state.facts.length,2,'Return trip preserves story progress');harness.reset();assert.equal(harness.state.realm,'ocean');assert.equal(harness.state.pearls.length,0);assert.equal(harness.state.facts.length,0);assert.equal(harness.state.wolfSeen,false);assert.deepEqual(readSave().pearls,[]);
+for(const [width,height] of [[1440,900],[390,844]]){
+ harness.host={clientWidth:width};harness.camera=new THREE.PerspectiveCamera(43,width/height,.2,650);harness.command('gate');harness.camera.updateMatrixWorld(true);
+ for(const x of [-9,0,9])for(const y of [0,18]){const point=new THREE.Vector3(oceanGate.x+Math.cos(oceanGate.rotation)*x,y,oceanGate.z-Math.sin(oceanGate.rotation)*x).project(harness.camera);assert(Math.abs(point.x)<1&&Math.abs(point.y)<1,'Arch and label must fit in the arrival camera on desktop and mobile');}
+ assert.equal(harness.state.realm,'ocean','Finding an arch must not bypass unlocking');
+}
 console.log(JSON.stringify({checks:'reward thresholds, save sanitization, two-way portal crossing, reachable story cards, valid second-map geometry, real wolf Run animation, English UI',wolfAnimations:wolf.animations.length,newMapMeshes:meshes}));
 beyond.dispose();art.dispose();

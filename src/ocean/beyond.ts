@@ -12,8 +12,8 @@ export function createPortal(gate:{x:number;z:number;rotation:number}) {
   vertexShader:'varying vec2 pos; void main(){pos=position.xy;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
   fragmentShader:`varying vec2 pos;uniform float time;uniform float active;
    void main(){float ripple=sin(pos.y*2.-time*2.2+sin(pos.x*1.8+time)*1.5);float mist=sin(pos.x*3.+pos.y*.9-time)*.5+.5;
-   vec3 color=mix(vec3(.32,.18,.55),vec3(.67,.28,1.),active);color+=vec3(.17,.16,.24)*(ripple*.5+.5);
-   float edge=smoothstep(3.5,4.3,abs(pos.x));gl_FragColor=vec4(color*(1.+active*.65),mix(.18,.46,active)+mist*.12+edge*.14);}`});
+   vec3 color=mix(vec3(.63,.25,.95),vec3(.67,.28,1.),active);color+=vec3(.17,.16,.24)*(ripple*.5+.5);
+   float edge=smoothstep(3.5,4.3,abs(pos.x));gl_FragColor=vec4(color*(1.+active*.65),mix(.48,.65,active)+mist*.12+edge*.14);}`});
  const mesh=new THREE.Mesh(new THREE.ShapeGeometry(shape,48),material);mesh.position.set(gate.x,0,gate.z);mesh.rotation.y=gate.rotation;mesh.name='violet-portal-membrane';return mesh;
 }
 

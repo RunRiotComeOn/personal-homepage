@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
+import { prepareSeagull, animateSeagull } from './wildlife';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -124,7 +126,13 @@ export class OceanWorld {
     const fishMat=this.mat('#85bbc0'),fin=this.mat('#4c8d97');const fishGroup=new THREE.Group();this.scene.add(fishGroup);
     for(let i=0;i<65;i++){const g=new THREE.Group(),a=random()*Math.PI*2,r=19+random()*85;g.position.set(Math.cos(a)*r,-.28,Math.sin(a)*r);this.mesh(new THREE.SphereGeometry(1,7,4),fishMat,g,0,0,0,.19,.12,.62);const t=this.mesh(new THREE.ConeGeometry(.24,.45,3),fin,g,0,0,.7);t.rotation.x=Math.PI/2;g.userData={a,r,speed:.013+random()*.015};fishGroup.add(g);this.birds.push(g);}
     const kelpMat=this.mat('#568665');for(let i=0;i<55;i++){const a=random()*Math.PI*2,r=27+random()*90,x=Math.sin(a)*r,z=Math.cos(a)*r;if(places.some(p=>Math.hypot(x-p.x,z-p.z)<p.radius+6))continue;const g=new THREE.Group();g.position.set(x,-1,z);for(let j=0;j<3;j++){const leaf=this.mesh(new THREE.ConeGeometry(.5,4+random()*3,5),kelpMat,g,(j-1)*.5,1,0);leaf.rotation.z=(j-1)*.3;}this.scene.add(g);this.foliage.push(g);}
-    const birdMat=this.mat('#dadace');for(let i=0;i<10;i++){const g=new THREE.Group();for(const side of [-1,1]){const wing=this.mesh(new THREE.ConeGeometry(.3,1.4,3),birdMat,g,side*.6,0,0);wing.rotation.z=side*1.25;}g.userData={a:random()*6.28,r:25+random()*80,speed:.08+random()*.1,bird:true};this.scene.add(g);this.birds.push(g);}
+    const flock:THREE.Group[]=[];
+    for(let i=0;i<10;i++){const g=new THREE.Group();g.visible=false;g.userData={a:random()*6.28,r:25+random()*80,speed:.08+random()*.1,bird:true};this.scene.add(g);this.birds.push(g);flock.push(g);}
+    Promise.all([new GLTFLoader().loadAsync(asset('models/seagull.glb')),new THREE.TextureLoader().loadAsync(asset('models/seagull-coat.jpg'))]).then(([model,coat])=>{
+      if(this.disposed){coat.dispose();model.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.geometry.dispose();(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());}});return;}
+      prepareSeagull(model.scene,coat);
+      flock.forEach((g,i)=>{const bird=cloneSkeleton(model.scene);g.add(bird);g.userData.rig=bird;g.visible=true;animateSeagull(bird,i*.7,i);const a=g.userData.a;g.position.set(Math.cos(a)*g.userData.r,15+i%3,Math.sin(a)*g.userData.r);g.rotation.y=-a;});
+    }).catch(()=>this.message('The seagull models could not load. Reload to try again.'));
     const geo=new THREE.BufferGeometry(),v=[];for(let i=0;i<200;i++)v.push((random()-.5)*210,.3+random()*9,(random()-.5)*210);geo.setAttribute('position',new THREE.Float32BufferAttribute(v,3));this.particles=new THREE.Points(geo,new THREE.PointsMaterial({color:'#c9df95',size:.1,transparent:true,opacity:.7,depthWrite:false}));this.scene.add(this.particles);
     // A sailboat in the outer bay.
     const boat=new THREE.Group();boat.position.set(-26,0,52);this.mesh(new THREE.SphereGeometry(1,10,6),this.mat('#b79a7b'),boat,0,.4,0,1.3,.7,2.7);this.mesh(new THREE.CylinderGeometry(.08,.08,6,8),this.mat('#d2c4ab'),boat,0,3.3,0);const sail=this.mesh(new THREE.ConeGeometry(2.5,4.5,3),this.mat('#d9d5bd'),boat,.5,3.5,0,.6,1,.07);sail.rotation.z=-.15;this.scene.add(boat);boat.userData.boat=true;this.boats.push(boat);
@@ -197,7 +205,7 @@ if(c==='home'){this.travel('home');return;}if(this.options.paused)return;if(c===
     this.art.time.value=this.options.reduced?0:t;
     const cangle=.45+this.cameraAngle;const distance=(this.host.clientWidth<700?50:42)*this.cameraZoom;const camTarget=new THREE.Vector3(this.state.x+Math.sin(cangle)*distance,this.options.reduced?40:distance*.68,this.state.z+Math.cos(cangle)*distance);this.camera.position.lerp(camTarget,1-Math.exp(-dt*2.5));this.camera.lookAt(this.state.x,0,this.state.z-7);
     this.water.material.uniforms.time.value=this.options.reduced?0:t;
-    if(!this.options.reduced){this.foliage.forEach((g,i)=>g.rotation.z=Math.sin(t*.7+i)*.035);this.birds.forEach((g,i)=>{const d=g.userData,a=d.a+t*d.speed;g.position.x=Math.cos(a)*d.r;g.position.z=Math.sin(a)*d.r;g.rotation.y=-a;g.position.y=d.bird?17+Math.sin(t+i)*1.2:-.34;});this.boats.forEach(g=>{if(g.userData.boat){g.rotation.z=Math.sin(t)*.05;g.position.y=Math.sin(t*.7)*.17;}else g.rotation.y=t*.19;});this.pearls.forEach((p,i)=>{p.position.y=1.2+Math.sin(t*2+i)*.25;p.rotation.y=t*.6;p.rotation.z=t*.4;});this.particles.rotation.y=Math.sin(t*.015)*.03;}
+    if(!this.options.reduced){this.foliage.forEach((g,i)=>g.rotation.z=Math.sin(t*.7+i)*.035);this.birds.forEach((g,i)=>{const d=g.userData,a=d.a+t*d.speed;g.position.x=Math.cos(a)*d.r;g.position.z=Math.sin(a)*d.r;g.rotation.y=-a;g.position.y=d.bird?15+Math.sin(t*.55+i)*1.2:-.34;if(d.bird&&d.rig){animateSeagull(d.rig,t,i);g.rotation.z=-.12+Math.sin(t*.5+i)*.045;}});this.boats.forEach(g=>{if(g.userData.boat){g.rotation.z=Math.sin(t)*.05;g.position.y=Math.sin(t*.7)*.17;}else g.rotation.y=t*.19;});this.pearls.forEach((p,i)=>{p.position.y=1.2+Math.sin(t*2+i)*.25;p.rotation.y=t*.6;p.rotation.z=t*.4;});this.particles.rotation.y=Math.sin(t*.015)*.03;}
     const st=t-this.sonarTime;this.sonar.scale.setScalar(Math.max(.01,st*17));(this.sonar.material as THREE.MeshBasicMaterial).opacity=st<3?(1-st/3)*.6:0;
     this.glows.forEach((g,i)=>{g.scale.setScalar(1+Math.sin(t*1.5+i)*.025);});
     this.rings.forEach((g,i)=>{g.scale.setScalar(this.state.race===i?1+Math.sin(t*3)*.08:.85);});

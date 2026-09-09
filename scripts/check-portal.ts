@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import * as THREE from 'three';
+import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
+import { prepareSeagull, animateSeagull } from '../src/ocean/wildlife';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OceanWorld, readSave } from '../src/ocean/world';
 import { initialState } from '../src/ocean/state';
@@ -25,8 +27,14 @@ for(const p of factPoints)for(const island of beyondPlaces)assert(Math.hypot(p[0
 const art=new StorybookArt({paper:new THREE.Texture(),leaves:new THREE.Texture()});const beyond=new BeyondWorld(art,()=>{});assert.equal(beyond.root.visible,false);beyond.root.visible=true;beyond.update(.1,false,[1,3]);assert.equal(beyond.facts[1].visible,false);assert.equal(beyond.facts[0].visible,true);
 let meshes=0;beyond.root.traverse(o=>{if(o instanceof THREE.Mesh){meshes++;for(const n of o.geometry.attributes.position.array)assert(Number.isFinite(n));}});assert(meshes>10);
 const bytes=readFileSync('public/models/arctic-wolf.glb');const wolf=await new GLTFLoader().register(()=>({name:'HEADLESS_TEST_TEXTURE',loadTexture:()=>Promise.resolve(new THREE.Texture())})).parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
-const run=wolf.animations.find(a=>/\|Run$/.test(a.name));assert(run&&run.duration>0);assert(run.tracks.length>5,'Wolf must use a real skeletal animation');
+const run=wolf.animations.find(a=>/run/i.test(a.name));assert(run&&run.duration>0);assert(run.tracks.length>5,'Wolf must use a real skeletal animation');
 const mixer=new THREE.AnimationMixer(wolf.scene);mixer.clipAction(run).play();mixer.update(.1);const transforms=()=>{const values:number[]=[];wolf.scene.traverse(o=>values.push(...o.position.toArray(),...o.quaternion.toArray()));return values;};const before=transforms();mixer.update(.2);assert.notDeepEqual(transforms(),before,'Run must move the rig');
+const gullBytes=readFileSync('public/models/seagull.glb');const gull=await new GLTFLoader().parseAsync(gullBytes.buffer.slice(gullBytes.byteOffset,gullBytes.byteOffset+gullBytes.byteLength),'');
+prepareSeagull(gull.scene,new THREE.Texture());const gullA=cloneSkeleton(gull.scene),gullB=cloneSkeleton(gull.scene);
+const wingA=gullA.getObjectByName('WINGLEFT')!,wingB=gullB.getObjectByName('WINGLEFT')!;assert(wingA&&wingB&&wingA!==wingB,'Every gull must have its own wing rig');
+const resting=wingB.quaternion.toArray();animateSeagull(gullA,1.1,0);assert.notDeepEqual(wingA.quaternion.toArray(),resting);assert.deepEqual(wingB.quaternion.toArray(),resting,'Animating one gull must not deform the rest of the flock');
+let skinCount=0;gullA.traverse(o=>{if(o instanceof THREE.SkinnedMesh){skinCount++;assert(o.geometry.attributes.uv,'Community gull texture must have UVs');assert(o.skeleton.bones.includes(wingA as THREE.Bone),'Cloned skin must bind to its own animated wing');}});assert(skinCount>0);
+assert(Math.abs(new THREE.Box3().setFromObject(gullB).getSize(new THREE.Vector3()).x-4.6)<.01,'Gull wingspan must use game world scale');
 for(const file of ['src/App.tsx','src/ocean/data.ts'])assert(!/\p{Script=Han}/u.test(readFileSync(file,'utf8')),'No Chinese UI text');
 // Exercise actual map switching and reset methods without constructing a WebGL renderer.
 let saved='';Object.defineProperty(globalThis,'localStorage',{value:{getItem:()=>saved,setItem:(_key:string,value:string)=>{saved=value;}}});

@@ -50,8 +50,24 @@ export class BeyondWorld {
   new GLTFLoader().load(asset('models/arctic-wolf.glb'),g=>{
    if(this.disposed){g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.geometry.dispose();(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());}});return;}
    const box=new THREE.Box3().setFromObject(g.scene),size=box.getSize(new THREE.Vector3());const scale=5.5/Math.max(size.x,size.y,size.z);g.scene.scale.setScalar(scale);this.wolfBase=-box.min.y*scale;g.scene.position.y=this.wolfBase;
-   g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.frustumCulled=false;const mats=Array.isArray(o.material)?o.material:[o.material];for(const mat of mats){if(mat instanceof THREE.MeshStandardMaterial){mat.color.lerp(new THREE.Color('#e5edf2'),.55);mat.roughness=.9;mat.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>', '#include <map_fragment>\nfloat fur=dot(diffuseColor.rgb,vec3(.299,.587,.114)); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.82,.90,.96),smoothstep(.12,.55,fur)*.82);');};}}}});
-   this.wolf.add(g.scene);this.mixer=new THREE.AnimationMixer(g.scene);const run=g.animations.find(a=>/\|Run$/.test(a.name));
+   g.scene.traverse(o=>{if(o instanceof THREE.Mesh){
+    o.castShadow=true;o.frustumCulled=false;
+    const mats=Array.isArray(o.material)?o.material:[o.material];
+    for(const mat of mats)if(mat instanceof THREE.MeshStandardMaterial){
+     mat.metalness=0;mat.roughness=.88;mat.flatShading=false;
+     // The community GLB omits the alpha mask for its optional fur cards.
+     // Keep the complete textured body instead of rendering opaque rectangles.
+     if(mat.name==='Wolf_Fur'){o.visible=false;continue;}
+     if(mat.name==='Wolf_Body'){
+      mat.color.set('#ffffff');
+      mat.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>', '#include <map_fragment>\nfloat coat=dot(diffuseColor.rgb,vec3(.299,.587,.114)); float pale=.70+.28*sqrt(coat); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(pale,pale,pale*1.015),smoothstep(.005,.035,coat));');};
+     }
+     if(mat.name==='Wolf_Teeth')mat.color.set('#f0eee5');
+     if(mat.name==='Wolf_Eyes'){mat.emissive.set('#000000');mat.roughness=.4;}
+     mat.needsUpdate=true;
+    }
+   }});
+   this.wolf.add(g.scene);this.mixer=new THREE.AnimationMixer(g.scene);const run=g.animations.find(a=>/run/i.test(a.name));
    if(run)this.mixer.clipAction(run).play();else this.message('The wolf animation could not load. Please reload to try again.');
   },undefined,()=>this.message('The arctic wolf could not load. Reload to try again.'));
  }

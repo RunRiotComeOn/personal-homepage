@@ -1,8 +1,16 @@
-# Arctic wolf
+# Arctic wolf model attribution
 
-Original model: Wolf by Quaternius
-Source: https://poly.pizza/m/XU7oNeKShV
-Asset: https://static.poly.pizza/2cd00c92-295b-4652-b1a3-c3a1394e5d83.glb
-License: CC0 (Public Domain), as stated on the source page.
+Original model, textures, rig, and animations: Dennis Haupt / 3DHaupt.
 
-The model is rescaled and tinted toward snowy white in the runtime. Its original skeletal Run animation is looped while the character follows the island circuit.
+Author page: https://3dhaupt.com/3d-wolf-rigged-low-poly-and-game-ready-download-walk-cycle-run-sit-creep-idle-animation/
+Original model: https://sketchfab.com/3d-models/wolf-with-animations-f3769a474a714ebbbaca0d97f9b0a5a0
+License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0).
+License text: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+GLB conversion shared in the Khronos community:
+https://github.com/KhronosGroup/glTF-Sample-Models/issues/142
+Download: https://github.com/KhronosGroup/UnityGLTF/files/2358714/Wolf.glb.zip
+
+The bundled GLB is unchanged. Runtime adaptations: scale, white coat material preserving the original coat detail, nonmetallic materials, and hiding optional fur cards whose alpha mask is missing in the community conversion. Original skeletal run animation retained. These wolf adaptations are also offered under CC BY-NC-SA 4.0. Attribution must be retained. No commercial use.
+
+This asset is used in a noncommercial personal portfolio. The license of this wolf asset does not change the separate licenses of other website assets.

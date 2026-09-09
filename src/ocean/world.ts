@@ -62,11 +62,24 @@ export class OceanWorld {
       g.scene.traverse(o=>{if(o instanceof THREE.Mesh){
         let geometry=o.geometry.clone().applyMatrix4(o.matrixWorld).applyMatrix4(normalization);
         geometry.deleteAttribute('normal');const welded=mergeVertices(geometry,.0001);geometry.dispose();geometry=welded;geometry.computeVertexNormals();
-        const m=(o.material as THREE.MeshStandardMaterial).clone();m.roughness=.48;m.flatShading=false;if(m.color.r<.1){m.color.set('#17273b');m.emissive.set('#070e1b');}else m.color.set('#e6e1d9');
+        const m=(o.material as THREE.MeshStandardMaterial).clone();m.roughness=.48;m.flatShading=false;if(m.color.r<.1){m.color.set('#17273b');m.emissive.set('#070e1b');
+          // Paint the eye markings on the skin itself: no raised overlay geometry.
+          m.onBeforeCompile=shader=>{
+            shader.vertexShader='varying vec3 vOrcaSkin;\n'+shader.vertexShader;
+            shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvOrcaSkin = position;');
+            shader.fragmentShader='varying vec3 vOrcaSkin;\n'+shader.fragmentShader;
+            shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
+              vec2 eyeUV = (vOrcaSkin.yz - vec2(-0.04, -2.32)) / vec2(0.14, 0.33);
+              float eyeDistance = length(eyeUV);
+              float eyeEdge = max(fwidth(eyeDistance), 0.025);
+              float eyeMask = 1.0 - smoothstep(1.0-eyeEdge, 1.0+eyeEdge, eyeDistance);
+              diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.88, 0.86, 0.82), eyeMask);
+            `);
+          };
+        }else m.color.set('#e6e1d9');
         const mesh=new THREE.Mesh(geometry,m);mesh.castShadow=true;mesh.frustumCulled=false;this.model.add(mesh);
         this.swimMeshes.push({geometry,base:new Float32Array(geometry.attributes.position.array)});
       }});
-      const eyePatch=new THREE.MeshStandardMaterial({color:'#f1e5db',roughness:.75});for(const x of [-.49,1.02]){const patch=new THREE.Mesh(new THREE.SphereGeometry(1,24,16),eyePatch);patch.position.set(x,-.04,-2.32);patch.scale.set(.22,.11,.32);patch.rotation.z=x<0?.25:-.25;this.model.add(patch);}
       this.loaded=true;this.state.ready=true;this.emit({...this.state});
     },undefined,()=>{this.state.error='The orca could not load. Please reload, or open the field guide to read the portfolio.';this.emit({...this.state});});
     this.composer=new EffectComposer(this.renderer);this.composer.addPass(new RenderPass(this.scene,this.camera));this.bloom=new UnrealBloomPass(new THREE.Vector2(host.clientWidth,host.clientHeight),.34,.6,.82);this.composer.addPass(this.bloom);this.composer.addPass(new OutputPass());

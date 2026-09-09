@@ -1,0 +1,5 @@
+Dolphin by Quaternius
+Source: https://poly.pizza/m/3LzFgI3GLO
+License: CC0 / Public Domain
+https://creativecommons.org/publicdomain/zero/1.0/
+Original mesh, rig and Armature|Swim animation preserved. Runtime scale, smooth shading and breach path added.

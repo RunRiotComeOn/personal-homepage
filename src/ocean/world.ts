@@ -1,3 +1,4 @@
+import { DolphinVisitor } from './dolphins';
 import * as THREE from 'three';
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 import { prepareSeagull, animateSeagull } from './wildlife';
@@ -35,6 +36,7 @@ export class OceanWorld {
   private particles!:THREE.Points;private wakes:THREE.Mesh[]=[];private wakeIndex=0;private wakeClock=0;private trailData:{age:number;life:number}[]=[];
   private art=new StorybookArt();private swimPhase=0;private turnBend=0;private swimMeshes:{geometry:THREE.BufferGeometry;base:Float32Array}[]=[];
   private arch=new THREE.Group();private original=new THREE.Group();private beyond!:BeyondWorld;private portal=createPortal(oceanGate);private portalCooldown=0;
+  private dolphins!:DolphinVisitor;
   private waterPigment:THREE.Texture|null=null;
   private materials:THREE.Material[]=[];private resizeObserver:ResizeObserver;private audio:AudioContext|null=null;private oscillator:OscillatorNode|null=null;private gain:GainNode|null=null;
   constructor(host:HTMLElement,emit:(s:WorldState)=>void,message:(s:string)=>void,interact:(id:PlaceId)=>void){
@@ -47,6 +49,7 @@ export class OceanWorld {
     this.scene.add(this.ambient,this.sun);this.sun.position.set(-65,85,-35);this.sun.castShadow=true;this.sun.shadow.mapSize.set(2048,2048);Object.assign(this.sun.shadow.camera,{left:-105,right:105,top:105,bottom:-105,near:1,far:250});this.sun.shadow.bias=-.0015;
     this.buildWater();this.buildIslands();this.buildSky();this.buildCollectibles();this.buildLife();this.buildWake();this.batchScenery();
     for(const child of [...this.scene.children])if(child!==this.water&&child!==this.sun&&child!==this.ambient)this.original.add(child);
+    this.dolphins=new DolphinVisitor();this.original.add(this.dolphins.root);
     this.original.add(this.portal);this.scene.add(this.original);
     const archLabel=this.textSprite('VIOLET PORTAL','#efd4ff');archLabel.position.set(oceanGate.x,18,oceanGate.z);archLabel.scale.set(17,2.2,1);this.original.add(archLabel);
     const portalLight=new THREE.PointLight('#b46bff',32,27,1.5);portalLight.position.set(oceanGate.x,6,oceanGate.z+2);this.original.add(portalLight);
@@ -210,6 +213,7 @@ if(c==='home'){this.travel('home');return;}if(this.options.paused)return;if(c===
       if(this.velocity.length()>1.5){this.wakeClock+=dt;if(this.wakeClock>.045){this.wakeClock=0;this.ripple(nx+Math.sin(this.heading)*2,nz+Math.cos(this.heading)*2);}}
     }
     this.portal.material.uniforms.time.value=this.options.reduced?0:t;this.portal.material.uniforms.active.value=echoRewards(this.state.pearls.length).portal?1:0;
+    this.dolphins.update(dt,this.state.x,this.state.z,this.state.realm==='ocean'&&!this.options.reduced,this.options.paused,(x,z)=>this.ripple(x,z,true));
     this.beyond.update(this.options.paused?0:dt,this.options.reduced,this.state.facts);
     this.state.heading=this.heading;this.orca.position.set(this.state.x,1.1+Math.sin(t*1.8)*.12+(this.jump>0?Math.sin((1.7-this.jump)/1.7*Math.PI)*5.8:0),this.state.z);this.orca.rotation.y=this.heading;this.model.rotation.x=this.jump>0?-Math.cos((1.7-this.jump)/1.7*Math.PI)*.6:Math.sin(t*5)*.025*(this.state.speed/10);this.model.scale.set(1,1,1);
     this.swimPhase+=dt*(1.5+this.state.speed*.32);
@@ -225,5 +229,5 @@ if(c==='home'){this.travel('home');return;}if(this.options.paused)return;if(c===
     this.wakes.forEach((m,i)=>{const d=this.trailData[i];if(!m.visible)return;d.age+=dt;if(d.age>d.life){m.visible=false;return;}m.scale.setScalar((m.userData.big?2:.4)+d.age*(m.userData.big?4:1.5));(m.material as THREE.MeshBasicMaterial).opacity=(1-d.age/d.life)*(m.userData.big?.3:.2);});
     if(t-this.lastEmit>.1){this.lastEmit=t;this.emit({...this.state});}this.composer.render();
   };
-  dispose(){this.beyond.dispose();this.disposed=true;cancelAnimationFrame(this.frame);this.resizeObserver.disconnect();window.removeEventListener('keydown',this.keydown);window.removeEventListener('keyup',this.keyup);window.removeEventListener('blur',this.blur);document.removeEventListener('visibilitychange',this.visibility);const c=this.renderer.domElement;c.removeEventListener('pointerdown',this.pointerdown);c.removeEventListener('pointermove',this.pointermove);c.removeEventListener('pointerup',this.pointerup);c.removeEventListener('pointercancel',this.pointercancel);c.removeEventListener('wheel',this.wheel);c.removeEventListener('contextmenu',this.contextmenu);c.removeEventListener('webglcontextlost',this.contextlost);this.scene.traverse(o=>{if(o instanceof THREE.Mesh||o instanceof THREE.Points||o instanceof THREE.Sprite){if('geometry'in o)o.geometry.dispose();const mats=Array.isArray(o.material)?o.material:[o.material];mats.forEach(m=>{if('map'in m&&(m as THREE.MeshStandardMaterial).map)(m as THREE.MeshStandardMaterial).map!.dispose();m.dispose();});}});this.art.dispose();this.waterPigment?.dispose();this.composer.dispose();this.renderer.dispose();this.renderer.domElement.remove();void this.audio?.close();}
+  dispose(){this.dolphins.dispose();this.beyond.dispose();this.disposed=true;cancelAnimationFrame(this.frame);this.resizeObserver.disconnect();window.removeEventListener('keydown',this.keydown);window.removeEventListener('keyup',this.keyup);window.removeEventListener('blur',this.blur);document.removeEventListener('visibilitychange',this.visibility);const c=this.renderer.domElement;c.removeEventListener('pointerdown',this.pointerdown);c.removeEventListener('pointermove',this.pointermove);c.removeEventListener('pointerup',this.pointerup);c.removeEventListener('pointercancel',this.pointercancel);c.removeEventListener('wheel',this.wheel);c.removeEventListener('contextmenu',this.contextmenu);c.removeEventListener('webglcontextlost',this.contextlost);this.scene.traverse(o=>{if(o instanceof THREE.Mesh||o instanceof THREE.Points||o instanceof THREE.Sprite){if('geometry'in o)o.geometry.dispose();const mats=Array.isArray(o.material)?o.material:[o.material];mats.forEach(m=>{if('map'in m&&(m as THREE.MeshStandardMaterial).map)(m as THREE.MeshStandardMaterial).map!.dispose();m.dispose();});}});this.art.dispose();this.waterPigment?.dispose();this.composer.dispose();this.renderer.dispose();this.renderer.domElement.remove();void this.audio?.close();}
 }

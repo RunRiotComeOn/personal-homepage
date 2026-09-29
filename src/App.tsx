@@ -255,7 +255,7 @@ function App() {
                 studying Data Science and Big Data Technology. My research
                 interests span{' '}
                 <span className="blue-underline">large language models</span>,{' '}
-                <span className="blue-underline">multimodal intelligence</span>,
+                <span className="blue-underline">multimodal intelligence</span>,{' '}
                 <span className="blue-underline">agentic systems</span>, and{' '}
                 <span className="blue-underline">game AI</span>.
               </p>

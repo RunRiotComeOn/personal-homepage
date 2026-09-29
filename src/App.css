@@ -181,6 +181,19 @@
   font-weight: 700;
 }
 
+.hero-bio,
+.principles-note,
+.research-row p:not(.row-label),
+.publication-copy .authors,
+.publication-description,
+.timeline p,
+.honors-list p,
+.life-notes,
+.contact-section > p:not(.contact-eyebrow) {
+  font-family: 'Google Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-optical-sizing: auto;
+}
+
 .hero-bio {
   max-width: 650px;
   color: #34414d;

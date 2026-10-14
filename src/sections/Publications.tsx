@@ -7,6 +7,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 const publications = [
   {
+    title: 'Reliable Knowledge Acquisition for Continual Learning Agents',
+    authors: 'Yixu Huang, Jiaqi W. Ma',
+    venue: 'arXiv 2026',
+    type: 'Preprint',
+    abstract: 'RIKA combines hierarchical knowledge extraction with evidence-based admission, helping continual learning agents reuse reliable knowledge from ongoing task experience without additional validation tasks.',
+    image: import.meta.env.BASE_URL + 'rika-overview.png',
+    links: {
+      pdf: 'https://github.com/RunRiotComeOn',
+      code: 'https://github.com/RunRiotComeOn',
+    },
+  },
+  {
     title: 'GUI Agents for Continual Game Generation',
     authors: 'Yixu Huang*, Bo Li*, Na Li*, Zhe Wang, et al.',
     venue: 'EMNLP 2026 Findings',

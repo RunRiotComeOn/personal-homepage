@@ -132,6 +132,11 @@ const publications = [
   {
     title:
       'ACE: Self-Evolving LLM Coding Framework via Adversarial Unit Test Generation and Preference Optimization',
+    compactTitle: true,
+    titleLines: [
+      'ACE: Self-Evolving LLM Coding Framework via',
+      'Adversarial Unit Test Generation and Preference Optimization',
+    ],
     authors: 'Yixu Huang, Xinglei Yu, Zhongyu Wei',
     venue: 'ICLR 2026 Workshop RSI',
     type: 'Spotlight',
@@ -411,7 +416,15 @@ function App() {
                     <span>{publication.venue}</span>
                     <span>{publication.type}</span>
                   </div>
-                  <h3 className={publication.compactTitle ? 'publication-title-compact' : undefined}>{publication.title}</h3>
+                  <h3 className={publication.compactTitle ? 'publication-title-compact' : undefined}>
+                    {publication.titleLines
+                      ? publication.titleLines.map((line, lineIndex) => (
+                          <span className="publication-title-line" key={line}>
+                            {lineIndex > 0 ? ' ' : ''}{line}
+                          </span>
+                        ))
+                      : publication.title}
+                  </h3>
                   <p className="authors">{publication.authors}</p>
                   <p className="publication-description">
                     {publication.description}

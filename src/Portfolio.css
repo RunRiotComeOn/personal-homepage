@@ -477,11 +477,19 @@
   text-transform: uppercase;
 }
 
+.publication-copy {
+  container-type: inline-size;
+}
+
 .publication-copy h3 {
   margin: 0 0 9px;
   font-size: clamp(18px, 1.7vw, 22px);
   line-height: 1.3;
   letter-spacing: -0.035em;
+}
+
+.publication-copy .publication-title-compact {
+  font-size: clamp(13px, 2.9cqi, 18px);
 }
 
 .authors {
@@ -941,6 +949,10 @@ footer a {
 
   .publication-copy {
     grid-column: 2;
+  }
+
+  .publication-copy .publication-title-compact {
+    font-size: 18px;
   }
 
   .split-section,

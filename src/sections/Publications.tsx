@@ -12,7 +12,7 @@ const publications = [
     venue: 'arXiv 2026',
     type: 'Preprint',
     abstract: 'RIKA combines hierarchical knowledge extraction with evidence-based admission, helping continual learning agents reuse reliable knowledge from ongoing task experience without additional validation tasks.',
-    image: import.meta.env.BASE_URL + 'rika-overview.png',
+    image: import.meta.env.BASE_URL + 'rika-method.png',
     links: {
       pdf: 'https://github.com/RunRiotComeOn',
       code: 'https://github.com/RunRiotComeOn',

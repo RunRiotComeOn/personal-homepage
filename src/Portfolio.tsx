@@ -87,10 +87,11 @@ const researchExperiences = [
 const publications = [
   {
     title: 'Reliable Knowledge Acquisition for Continual Learning Agents',
+    compactTitle: true,
     authors: 'Yixu Huang, Jiaqi W. Ma',
     venue: 'arXiv 2026',
     type: 'Preprint',
-    image: `${import.meta.env.BASE_URL}rika-overview.png`,
+    image: `${import.meta.env.BASE_URL}rika-method.png`,
     description:
       'RIKA combines hierarchical knowledge extraction with evidence-based admission, helping continual learning agents reuse reliable knowledge from ongoing task experience without additional validation tasks.',
     links: [
@@ -116,6 +117,7 @@ const publications = [
   },
   {
     title: 'Learning Adaptive Reasoning Paths for Efficient Visual Reasoning',
+    compactTitle: true,
     authors: 'Yixu Huang, Tinghui Zhu, Muhao Chen',
     venue: 'arXiv 2026',
     type: 'Preprint',
@@ -409,7 +411,7 @@ function App() {
                     <span>{publication.venue}</span>
                     <span>{publication.type}</span>
                   </div>
-                  <h3>{publication.title}</h3>
+                  <h3 className={publication.compactTitle ? 'publication-title-compact' : undefined}>{publication.title}</h3>
                   <p className="authors">{publication.authors}</p>
                   <p className="publication-description">
                     {publication.description}

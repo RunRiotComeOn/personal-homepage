@@ -121,7 +121,7 @@ export default function Publications() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
         <div className="mb-16">
-          <h2 className="pub-title section-title">Publications</h2>
+          <h2 className="pub-title section-title">Selected Publications</h2>
           <p className="mt-4 text-[#6c757d] text-lg">
             Research papers and ongoing projects
           </p>

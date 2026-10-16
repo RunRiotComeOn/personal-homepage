@@ -489,7 +489,7 @@
 }
 
 .publication-copy .publication-title-compact {
-  font-size: clamp(13px, 2.9cqi, 18px);
+  font-size: clamp(14px, 3.3cqi, 22px);
 }
 
 @media (min-width: 761px) {
@@ -958,7 +958,7 @@ footer a {
   }
 
   .publication-copy .publication-title-compact {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .split-section,

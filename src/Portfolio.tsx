@@ -95,7 +95,7 @@ const publications = [
     description:
       'RIKA combines hierarchical knowledge extraction with evidence-based admission, helping continual learning agents reuse reliable knowledge from ongoing task experience without additional validation tasks.',
     links: [
-      { label: 'Paper', href: 'https://github.com/RunRiotComeOn' },
+      { label: 'Paper', href: 'https://arxiv.org/abs/2610.21739' },
       { label: 'Code', href: 'https://github.com/RunRiotComeOn' },
     ],
   },

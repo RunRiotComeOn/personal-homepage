@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import './portfolio-index.css';
 import './Portfolio.css';
+import VisitorMap from './components/VisitorMap';
 
 const navLinks = [
   { label: 'ABOUT', href: '#about' },
@@ -591,6 +592,7 @@ function App() {
             <ArrowUpRight size={19} />
           </a>
         </section>
+        <VisitorMap widgetSrc="https://mapmyvisitors.com/map.js?d=yEdpSewF8c_nFzfsO4OGZvJbAFg-bTT7bLDFljnziUU&cl=ffffff&w=a" />
       </main>
 
       <footer>

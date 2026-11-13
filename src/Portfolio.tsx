@@ -120,8 +120,8 @@ const publications = [
     title: 'Learning Adaptive Reasoning Paths for Efficient Visual Reasoning',
     compactTitle: true,
     authors: 'Yixu Huang, Tinghui Zhu, Muhao Chen',
-    venue: 'arXiv 2026',
-    type: 'Preprint',
+    venue: 'EACL 2027 Findings',
+    type: 'Accepted',
     image: `${import.meta.env.BASE_URL}avr-figure1.png`,
     description:
       'AVR dynamically selects efficient visual reasoning paths while preserving correctness, reducing token usage by 50–90% across VQA benchmarks.',

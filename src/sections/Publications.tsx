@@ -33,8 +33,8 @@ const publications = [
   {
     title: 'Learning Adaptive Reasoning Paths for Efficient Visual Reasoning',
     authors: 'Yixu Huang, Tinghui Zhu, Muhao Chen',
-    venue: 'arXiv 2026',
-    type: 'Preprint',
+    venue: 'EACL 2027 Findings',
+    type: 'Accepted',
     abstract: 'We propose AVR, an adaptive visual reasoning training framework that reduces reasoning path redundancy in Visual Reasoning Models. AVR decomposes visual reasoning into visual perception, logical reasoning, and answer application, then trains models with FS-GRPO to dynamically choose the most efficient response format while preserving correctness, reducing token usage by 50-90% across VQA benchmarks.',
     image: import.meta.env.BASE_URL + 'avr-figure1.png',
     links: {

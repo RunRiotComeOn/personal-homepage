@@ -121,7 +121,7 @@ const publications = [
     compactTitle: true,
     authors: 'Yixu Huang, Tinghui Zhu, Muhao Chen',
     venue: 'EACL 2027 Findings',
-    type: 'Accepted',
+    type: 'Poster',
     image: `${import.meta.env.BASE_URL}avr-figure1.png`,
     description:
       'AVR dynamically selects efficient visual reasoning paths while preserving correctness, reducing token usage by 50–90% across VQA benchmarks.',

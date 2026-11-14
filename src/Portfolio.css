@@ -1101,3 +1101,17 @@ footer a {
 .sop-video-close { display: grid; place-items: center; flex: 0 0 36px; height: 36px; border: 1px solid #cbdcea; border-radius: 50%; background: #edf6ff; color: #164b75; cursor: pointer; }
 .sop-video-dialog video { display: block; width: 100%; max-height: 65dvh; border-radius: 10px; background: #000; }
 .sop-video-direct { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; color: #246fa9; font-size: 13px; }
+
+.sop-link-tooltip {
+  z-index: 60;
+  max-width: min(280px, calc(100vw - 32px));
+  padding: 10px 14px;
+  border: 1px solid #cbdcea;
+  border-radius: 8px;
+  background: #fbfdff;
+  color: #164b75;
+  box-shadow: 0 4px 18px #17212b1a;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.sop-tooltip-arrow { fill: #fbfdff; }

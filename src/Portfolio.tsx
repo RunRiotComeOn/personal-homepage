@@ -19,6 +19,7 @@ import {
   X,
 } from 'lucide-react';
 import * as Dialog from '@radix-ui/react-dialog';
+import * as Tooltip from '@radix-ui/react-tooltip';
 import './portfolio-index.css';
 import './Portfolio.css';
 import VisitorMap from './components/VisitorMap';
@@ -293,17 +294,25 @@ function App() {
                   <a href="https://jiaqima.github.io/" target="_blank" rel="noreferrer">
                     Prof. Jiaqi W. Ma
                   </a>{' '}
-                  <Dialog.Trigger asChild>
-                    <button
-                      className="sop-inline-link"
-                      type="button"
-                      title="Watch my visual Statement of Purpose"
-                    >
-                      at UIUC on <span className="blue-underline">continual learning methods</span>{' '}
-                      that help agents adapt over time and develop capabilities{' '}
-                      <span className="blue-underline">beyond those of their underlying foundation models</span>.
-                    </button>
-                  </Dialog.Trigger>
+                  at UIUC on <span className="blue-underline">continual learning methods</span>{' '}
+                  that help agents adapt over time and develop capabilities{' '}
+                  <Tooltip.Provider delayDuration={200}>
+                    <Tooltip.Root>
+                      <Tooltip.Trigger asChild>
+                        <Dialog.Trigger asChild>
+                          <button className="sop-inline-link" type="button">
+                            <span className="blue-underline">beyond those of their underlying foundation models</span>
+                          </button>
+                        </Dialog.Trigger>
+                      </Tooltip.Trigger>
+                      <Tooltip.Portal>
+                        <Tooltip.Content className="sop-link-tooltip" side="top" sideOffset={8} collisionPadding={16}>
+                          Take 3 minutes to watch my SOP video
+                          <Tooltip.Arrow className="sop-tooltip-arrow" />
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
+                    </Tooltip.Root>
+                  </Tooltip.Provider>.
                 </p>
                 <Dialog.Portal>
                   <Dialog.Overlay className="sop-video-overlay" />
@@ -316,10 +325,10 @@ function App() {
                       <Dialog.Close className="sop-video-close" aria-label="Close video"><X size={23} /></Dialog.Close>
                     </div>
                     <video controls playsInline preload="metadata" aria-label="Yixu Huang's Statement of Purpose">
-                      <source src={`${import.meta.env.BASE_URL}videos/yixu_huang_sop_reel.mp4`} type="video/mp4" />
+                      <source src={`${import.meta.env.BASE_URL}videos/yixu_huang_sop_reel_v2.mp4`} type="video/mp4" />
                       Your browser does not support embedded video.
                     </video>
-                    <a className="sop-video-direct" href={`${import.meta.env.BASE_URL}videos/yixu_huang_sop_reel.mp4`} target="_blank" rel="noreferrer">
+                    <a className="sop-video-direct" href={`${import.meta.env.BASE_URL}videos/yixu_huang_sop_reel_v2.mp4`} target="_blank" rel="noreferrer">
                       Open video in a new tab <ExternalLink size={14} aria-hidden="true" />
                     </a>
                   </Dialog.Content>

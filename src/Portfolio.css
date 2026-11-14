@@ -1057,41 +1057,29 @@ footer a {
 @media(max-width:700px){.atlas-hero-entry{padding:16px 17px}.atlas-entry-icon{min-width:44px;height:44px}}
 
 
-/* A visible research-story invitation beside the research introduction. */
-.sop-video-entry {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  margin: 18px 0 22px;
-  padding: 16px 18px;
-  color: #164b75;
-  background: #edf6ff;
-  border: 1px solid #b6d8f6;
-  border-left: 4px solid #4494dc;
-  border-radius: 12px;
-  text-align: left;
+/* Keep the SOP invitation within the research sentence. */
+.sop-inline-link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
   font: inherit;
+  line-height: inherit;
+  text-align: inherit;
   cursor: pointer;
-  transition: background 180ms ease, box-shadow 180ms ease;
 }
-.sop-video-entry:hover { background: #deefff; box-shadow: 0 5px 18px #27649a14; }
-.sop-video-entry:focus-visible, .sop-video-close:focus-visible, .sop-video-direct:focus-visible {
-  outline: 3px solid #327fbe;
+.sop-inline-link:hover {
+  color: var(--blue-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.sop-inline-link:focus-visible, .sop-video-close:focus-visible, .sop-video-direct:focus-visible {
+  outline: 2px solid #327fbe;
   outline-offset: 4px;
 }
-.sop-play-icon {
-  display: grid;
-  place-items: center;
-  flex: 0 0 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #fff;
-  color: #246fa9;
-}
-.sop-entry-copy { display: grid; gap: 3px; }
-.sop-entry-copy strong { display: flex; align-items: center; gap: 8px; font-size: 16px; }
-.sop-entry-copy > span { font-size: 13px; line-height: 1.5; color: #4e6b84; }
 .sop-video-overlay { position: fixed; inset: 0; z-index: 100; background: #0b172acc; }
 .sop-video-dialog {
   position: fixed;

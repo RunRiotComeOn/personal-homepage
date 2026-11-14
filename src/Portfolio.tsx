@@ -15,7 +15,6 @@ import {
   Menu,
   Music2,
   Plane,
-  Play,
   Trophy,
   X,
 } from 'lucide-react';
@@ -288,31 +287,24 @@ function App() {
                 <span className="blue-underline">agentic systems</span>, and{' '}
                 <span className="blue-underline">game AI</span>.
               </p>
-              <p>
-                I am currently working with{' '}
-                <a href="https://jiaqima.github.io/" target="_blank" rel="noreferrer">
-                  Prof. Jiaqi W. Ma
-                </a>{' '}
-                at UIUC on{' '}
-                <span className="blue-underline">
-                  continual learning methods
-                </span>{' '}
-                that help agents adapt over time and develop capabilities{' '}
-                <span className="blue-underline">
-                  beyond those of their underlying foundation models
-                </span>
-                .
-              </p>
               <Dialog.Root>
-                <Dialog.Trigger asChild>
-                  <button className="sop-video-entry" type="button">
-                    <span className="sop-play-icon"><Play size={21} fill="currentColor" aria-hidden="true" /></span>
-                    <span className="sop-entry-copy">
-                      <strong>Watch my SOP <ArrowUpRight size={17} aria-hidden="true" /></strong>
-                      <span>A visual Statement of Purpose — my research vision, in motion.</span>
-                    </span>
-                  </button>
-                </Dialog.Trigger>
+                <p>
+                  I am currently working with{' '}
+                  <a href="https://jiaqima.github.io/" target="_blank" rel="noreferrer">
+                    Prof. Jiaqi W. Ma
+                  </a>{' '}
+                  <Dialog.Trigger asChild>
+                    <button
+                      className="sop-inline-link"
+                      type="button"
+                      title="Watch my visual Statement of Purpose"
+                    >
+                      at UIUC on <span className="blue-underline">continual learning methods</span>{' '}
+                      that help agents adapt over time and develop capabilities{' '}
+                      <span className="blue-underline">beyond those of their underlying foundation models</span>.
+                    </button>
+                  </Dialog.Trigger>
+                </p>
                 <Dialog.Portal>
                   <Dialog.Overlay className="sop-video-overlay" />
                   <Dialog.Content className="sop-video-dialog">

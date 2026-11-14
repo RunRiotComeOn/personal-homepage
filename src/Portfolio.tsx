@@ -15,9 +15,11 @@ import {
   Menu,
   Music2,
   Plane,
+  Play,
   Trophy,
   X,
 } from 'lucide-react';
+import * as Dialog from '@radix-ui/react-dialog';
 import './portfolio-index.css';
 import './Portfolio.css';
 import VisitorMap from './components/VisitorMap';
@@ -301,6 +303,36 @@ function App() {
                 </span>
                 .
               </p>
+              <Dialog.Root>
+                <Dialog.Trigger asChild>
+                  <button className="sop-video-entry" type="button">
+                    <span className="sop-play-icon"><Play size={21} fill="currentColor" aria-hidden="true" /></span>
+                    <span className="sop-entry-copy">
+                      <strong>Watch my SOP <ArrowUpRight size={17} aria-hidden="true" /></strong>
+                      <span>A visual Statement of Purpose — my research vision, in motion.</span>
+                    </span>
+                  </button>
+                </Dialog.Trigger>
+                <Dialog.Portal>
+                  <Dialog.Overlay className="sop-video-overlay" />
+                  <Dialog.Content className="sop-video-dialog">
+                    <div className="sop-video-heading">
+                      <div>
+                        <Dialog.Title>My Statement of Purpose</Dialog.Title>
+                        <Dialog.Description>Yixu Huang · A visual introduction to my research vision</Dialog.Description>
+                      </div>
+                      <Dialog.Close className="sop-video-close" aria-label="Close video"><X size={23} /></Dialog.Close>
+                    </div>
+                    <video controls playsInline preload="metadata" aria-label="Yixu Huang's Statement of Purpose">
+                      <source src={`${import.meta.env.BASE_URL}videos/yixu_huang_sop_reel.mp4`} type="video/mp4" />
+                      Your browser does not support embedded video.
+                    </video>
+                    <a className="sop-video-direct" href={`${import.meta.env.BASE_URL}videos/yixu_huang_sop_reel.mp4`} target="_blank" rel="noreferrer">
+                      Open video in a new tab <ExternalLink size={14} aria-hidden="true" />
+                    </a>
+                  </Dialog.Content>
+                </Dialog.Portal>
+              </Dialog.Root>
               <p>
                 Beyond research, I build games, take photos, hike, read, and
                 keep looking for new places to explore.

@@ -298,9 +298,9 @@ function App() {
                   <span className="blue-underline">continual learning agents</span>{' '}
                   that can interact with digital and physical worlds.{' '}
                   <Dialog.Trigger asChild>
-                    <button className="sop-video-tag" type="button" aria-label="Watch my Statement of Purpose: my research interests, 3-minute video">
+                    <button className="sop-video-tag" type="button" aria-label="Curious about my research interests? Watch my 3-min SOP video">
                       <Play size={11} fill="currentColor" aria-hidden="true" />
-                      My research interests <span aria-hidden="true">·</span> 3-min video
+                      Curious about my research interests? Watch my 3-min SOP video
                     </button>
                   </Dialog.Trigger>
                 </p>

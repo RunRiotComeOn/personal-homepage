@@ -15,11 +15,11 @@ import {
   Menu,
   Music2,
   Plane,
+  Play,
   Trophy,
   X,
 } from 'lucide-react';
 import * as Dialog from '@radix-ui/react-dialog';
-import * as Tooltip from '@radix-ui/react-tooltip';
 import './portfolio-index.css';
 import './Portfolio.css';
 import VisitorMap from './components/VisitorMap';
@@ -290,29 +290,19 @@ function App() {
               </p>
               <Dialog.Root>
                 <p>
-                  I am currently working with{' '}
+                  I am currently working under{' '}
                   <a href="https://jiaqima.github.io/" target="_blank" rel="noreferrer">
                     Prof. Jiaqi W. Ma
                   </a>{' '}
-                  at UIUC on <span className="blue-underline">continual learning methods</span>{' '}
-                  that help agents adapt over time and develop capabilities{' '}
-                  <Tooltip.Provider delayDuration={200}>
-                    <Tooltip.Root>
-                      <Tooltip.Trigger asChild>
-                        <Dialog.Trigger asChild>
-                          <button className="sop-inline-link" type="button">
-                            <span className="blue-underline">beyond those of their underlying foundation models</span>
-                          </button>
-                        </Dialog.Trigger>
-                      </Tooltip.Trigger>
-                      <Tooltip.Portal>
-                        <Tooltip.Content className="sop-link-tooltip" side="top" sideOffset={8} collisionPadding={16}>
-                          Take 3 minutes to watch my SOP video
-                          <Tooltip.Arrow className="sop-tooltip-arrow" />
-                        </Tooltip.Content>
-                      </Tooltip.Portal>
-                    </Tooltip.Root>
-                  </Tooltip.Provider>.
+                  at UIUC. I&apos;m broadly interested in{' '}
+                  <span className="blue-underline">continual learning agents</span>{' '}
+                  that can interact with digital and physical worlds.{' '}
+                  <Dialog.Trigger asChild>
+                    <button className="sop-video-tag" type="button" aria-label="Watch my Statement of Purpose: my research interests, 3-minute video">
+                      <Play size={11} fill="currentColor" aria-hidden="true" />
+                      My research interests <span aria-hidden="true">·</span> 3-min video
+                    </button>
+                  </Dialog.Trigger>
                 </p>
                 <Dialog.Portal>
                   <Dialog.Overlay className="sop-video-overlay" />

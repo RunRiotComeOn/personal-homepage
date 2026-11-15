@@ -1057,28 +1057,29 @@ footer a {
 @media(max-width:700px){.atlas-hero-entry{padding:16px 17px}.atlas-entry-icon{min-width:44px;height:44px}}
 
 
-/* Keep the SOP invitation within the research sentence. */
-.sop-inline-link {
-  display: inline;
-  padding: 0;
+/* A small, always-visible invitation beside the research interests. */
+.sop-video-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  vertical-align: baseline;
+  padding: 3px 9px;
   border: 0;
-  border-radius: 0;
-  background: none;
-  color: inherit;
+  border-radius: 6px;
+  background: #e8f3ff;
+  color: #467596;
   font: inherit;
-  line-height: inherit;
-  text-align: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
   cursor: pointer;
+  transition: background 160ms ease;
 }
-.sop-inline-link:hover {
-  color: var(--blue-dark);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-}
-.sop-inline-link:focus-visible, .sop-video-close:focus-visible, .sop-video-direct:focus-visible {
+.sop-video-tag:hover { background: #d8ebfc; }
+.sop-video-tag:focus-visible, .sop-video-close:focus-visible, .sop-video-direct:focus-visible {
   outline: 2px solid #327fbe;
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 .sop-video-overlay { position: fixed; inset: 0; z-index: 100; background: #0b172acc; }
 .sop-video-dialog {
@@ -1101,17 +1102,3 @@ footer a {
 .sop-video-close { display: grid; place-items: center; flex: 0 0 36px; height: 36px; border: 1px solid #cbdcea; border-radius: 50%; background: #edf6ff; color: #164b75; cursor: pointer; }
 .sop-video-dialog video { display: block; width: 100%; max-height: 65dvh; border-radius: 10px; background: #000; }
 .sop-video-direct { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; color: #246fa9; font-size: 13px; }
-
-.sop-link-tooltip {
-  z-index: 60;
-  max-width: min(280px, calc(100vw - 32px));
-  padding: 10px 14px;
-  border: 1px solid #cbdcea;
-  border-radius: 8px;
-  background: #fbfdff;
-  color: #164b75;
-  box-shadow: 0 4px 18px #17212b1a;
-  font-size: 13px;
-  line-height: 1.5;
-}
-.sop-tooltip-arrow { fill: #fbfdff; }
